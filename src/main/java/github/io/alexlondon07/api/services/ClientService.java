@@ -1,0 +1,21 @@
+
+package github.io.alexlondon07.api.services;
+
+import java.util.List;
+
+import github.io.alexlondon07.api.models.Client;
+
+public interface ClientService {
+	
+	void saveClient( Client client);
+	
+	void updateClient ( Client client );
+	
+	void deleteClient ( long idClient);
+	
+	Client findById( long idClient);
+	
+	Client findByName ( String name);
+	
+	List<Client> findAllClients();
+}
