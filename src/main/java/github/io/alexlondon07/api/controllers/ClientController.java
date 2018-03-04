@@ -38,7 +38,7 @@ public class ClientController {
 
 		List<Client> clients = new ArrayList<>();
 		
-		
+		//Search for client id_client 
 		if(idClient !=null){
 			clients = (List<Client>) clientService.findById(idClient);
 			if(clients.isEmpty()){
@@ -46,6 +46,7 @@ public class ClientController {
 			}
 		}
 		
+		//Search for client name
 		if(name!=null){
 			Client client = (Client) clientService.findByName(name);
 			if(client == null){
@@ -53,6 +54,7 @@ public class ClientController {
 			}
 		}
 		
+		//If id_client and name are null, Get all Clients in database
 		if(name == null && idClient == null){
 			clients = clientService.findAllClients();
 			if(clients.isEmpty()){
