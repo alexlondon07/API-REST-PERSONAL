@@ -40,10 +40,10 @@ public class ClientDaoImpl extends AbstractSession implements ClientDao {
 	}
 
 	@Override
-	public Client findByName(String name) {
+	public Client findByCellphone(String number) {
 		return (Client) getSession().createQuery(
-			"from Client where name = :name")
-		.setParameter("name", name)
+			"from Client where cellphone = :cellphone")
+		.setParameter("cellphone", number)
 		.uniqueResult();
 	}
 

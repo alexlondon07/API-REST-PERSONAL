@@ -14,7 +14,7 @@ public interface ClientDao {
 	
 	Client findById( Long idClient);
 	
-	Client findByName ( String name);
+	Client findByCellphone ( String name);
 	
 	List<Client> findAllClients();
 }

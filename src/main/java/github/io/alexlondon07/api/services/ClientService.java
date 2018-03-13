@@ -15,7 +15,7 @@ public interface ClientService {
 	
 	Client findById( long idClient);
 	
-	Client findByName ( String name);
-	
+	Client findByCellphone ( String number);
+		
 	List<Client> findAllClients();
 }

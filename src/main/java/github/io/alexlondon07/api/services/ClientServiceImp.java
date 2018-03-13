@@ -38,8 +38,8 @@ public class ClientServiceImp implements ClientService {
 	}
 
 	@Override
-	public Client findByName(String name) {
-		return clienteDao.findByName(name);
+	public Client findByCellphone(String number) {
+		return clienteDao.findByCellphone(number);
 	}
 
 	@Override

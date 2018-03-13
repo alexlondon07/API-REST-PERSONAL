@@ -31,10 +31,11 @@ public class DataBaseConfiguration {
 	@Bean
 	public DataSource dataSource(){
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");				
 		dataSource.setUrl("jdbc:mysql://localhost:3306/api_accounting");
 		dataSource.setUsername("api_accounting");
-		dataSource.setPassword("api_accounting");
+		dataSource.setPassword("api_accounting");	
 		
 		return dataSource;
 	}
