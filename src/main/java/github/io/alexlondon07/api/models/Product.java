@@ -19,6 +19,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name ="products")
 public class Product implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8157928487443214003L;
+
 	@Id
 	@Column(name="ide_product")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

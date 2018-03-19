@@ -27,6 +27,7 @@ import util.CustomErrorType;
 public class ClientController {
 	
 	public static final Logger logger = LoggerFactory.getLogger(ClientController.class);
+	private static final String JSON = "Accept=application/json";
 	
 	@Autowired
 	ClientService clientService;
@@ -38,7 +39,7 @@ public class ClientController {
 	 * @param idClient
 	 * @return
 	 */
-	@RequestMapping(value="/clients", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value="/clients", method = RequestMethod.GET, headers = JSON)
 	public @ResponseBody ResponseEntity<List<Client>> getClients(@RequestParam(value="name", required=false) String name, @RequestParam(value = "id_client", required = false) Long idClient){
 
 		List<Client> clients = new ArrayList<>();
@@ -78,7 +79,7 @@ public class ClientController {
 	 * @param uriBuilder
 	 * @return
 	 */
-	@RequestMapping(value="/clients", method = RequestMethod.POST, headers = "Accept=application/json")
+	@RequestMapping(value="/clients", method = RequestMethod.POST, headers = JSON)
 	public ResponseEntity<?> createclient(@RequestBody Client client, UriComponentsBuilder uriBuilder){
 		
 		logger.info("Creating Client : {}", client);
@@ -134,25 +135,29 @@ public class ClientController {
 	 * @param client
 	 * @return
 	 */
+	@RequestMapping(value="/clients/{id}", method = RequestMethod.PATCH, headers = JSON)
 	public ResponseEntity<Client> updateClient(@PathVariable("id") Long id, @RequestBody Client client){
 		
 		logger.info("Updating Client id {} ", id);
+		
 		if(id == null || id <= 0){
 			return new ResponseEntity(new CustomErrorType("idClient is required"), HttpStatus.CONFLICT);
 		}
 		
+		client.setIdCliente(id);
 		validateDataClient(client);
 		
 		if(isClientExist(client)){
 			return new ResponseEntity(
-					new CustomErrorType("Unable to create. A Client with name " + client.getName() + " already exist."),
-					HttpStatus.CONFLICT);
+					new CustomErrorType("Unable to update. A Client with cellphone " 
+							+ client.getCellphone() + " already exist,  her name is " 
+							+ client.getName() ),HttpStatus.CONFLICT);
 		}
 		
 		Client currentClient = clientService.findById(id);
 		if(currentClient == null ){
 			return new ResponseEntity(
-					new CustomErrorType("Unable to create. A Client with id " + id + " already exist."),
+					new CustomErrorType("Unable to update. A Client with id " + id + " already exist."),
 					HttpStatus.CONFLICT);
 		}
 		
@@ -168,16 +173,25 @@ public class ClientController {
 	
 	
 	/**
-	 * Metodo que valida si un cliente ya existe en el sistema registrado con el mismo nùmero de Telefono
+	 * Metodo que valida si un cliente ya existe en el sistema registrado con el mismo número de Teléfono
 	 * @param client
 	 * @return
 	 */
 	private boolean isClientExist(Client client) {
-		if(clientService.findByCellphone(client.getCellphone()) !=null){
-			logger.error("Unable to create. A Client with Cellphone " + client.getCellphone() +  " already exist");
-			return true;
+		
+		Client clientResponse = clientService.findByCellphone(client.getCellphone());
+		boolean vBalid = false;
+		
+		System.err.println("client.getIdCliente() ++ " + client.getIdCliente() + " clientResponse.getIdCliente() " +clientResponse.getIdCliente());
+		
+		if(clientResponse !=null){
+			
+			if(client.getIdCliente() != clientResponse.getIdCliente()){
+				logger.error("Unable to create or update. A Client with Cellphone " + client.getCellphone() +  " already exist");
+				vBalid =  true;	
+			}
 		}
-		return false;
+		return vBalid;
 	}
 	
 }

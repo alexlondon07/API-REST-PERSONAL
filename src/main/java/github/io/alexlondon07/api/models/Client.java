@@ -14,10 +14,15 @@ import javax.persistence.Table;
 @Table(name="clients")
 public class Client implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1682943283826480346L;
+
 	@Id
 	@Column(name="ide_client")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idCliente;
+	private Long idCliente;
 	
 	@Column(name="name")
 	private String name;
@@ -53,10 +58,10 @@ public class Client implements Serializable {
 	}
 
 	//Getter and Setters
-	public int getIdCliente() {
+	public Long getIdCliente() {
 		return idCliente;
 	}	
-	public void setIdCliente(int idCliente) {
+	public void setIdCliente(Long idCliente) {
 		this.idCliente = idCliente;
 	}
 	public String getName() {
