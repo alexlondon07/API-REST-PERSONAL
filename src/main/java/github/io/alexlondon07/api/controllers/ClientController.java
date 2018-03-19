@@ -171,7 +171,29 @@ public class ClientController {
 		return new ResponseEntity<Client>(currentClient, HttpStatus.OK);
 	}
 	
-	
+	// ------------------- DELETE Client----------------------------------------------------------------------------------
+	@RequestMapping(value = "/clients/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteCourse(@PathVariable("id") Long id){
+		
+		logger.info("fetching % Deleting Course with id {} ", id);
+		
+		if (id == null || id <= 0) {
+			return new ResponseEntity(new CustomErrorType("idClient is required"), HttpStatus.CONFLICT);
+		}
+		
+		Client client = clientService.findById(id);
+		
+		if(client == null){
+			return new ResponseEntity(
+					new CustomErrorType("Unable to delete. A Client with id " + id + " not found."),
+					HttpStatus.NOT_FOUND);
+		}
+		
+		clientService.deleteClient(id);
+		return new ResponseEntity<Client>(HttpStatus.OK);
+		
+	}
+
 	/**
 	 * Metodo que valida si un cliente ya existe en el sistema registrado con el mismo número de Teléfono
 	 * @param client
