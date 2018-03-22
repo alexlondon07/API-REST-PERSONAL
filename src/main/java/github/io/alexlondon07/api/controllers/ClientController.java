@@ -82,9 +82,10 @@ public class ClientController {
 	@RequestMapping(value="/clients", method = RequestMethod.POST, headers = JSON)
 	public ResponseEntity<?> createclient(@RequestBody Client client, UriComponentsBuilder uriBuilder){
 		
-		logger.info("Creating Client : {}", client);
+		logger.info("Creating Client : {}", client.getName());
 		
 		CustomErrorType response = validateDataClient(client);
+		
 		if(!response.isValidationOk()){
 			return new ResponseEntity(new CustomErrorType(response.getErrorMessage()),HttpStatus.CONFLICT);
 		}
@@ -92,7 +93,7 @@ public class ClientController {
 		//Create Client
 		clientService.saveClient(client);
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(uriBuilder.path("/v1/clients/{id}").buildAndExpand(client.getIdCliente()).toUri());
+		headers.setLocation(uriBuilder.path("/v1/clients/{id}").buildAndExpand(client.getIdClient()).toUri());
 		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 		
 	}
@@ -144,7 +145,7 @@ public class ClientController {
 			return new ResponseEntity(new CustomErrorType("idClient is required"), HttpStatus.CONFLICT);
 		}
 		
-		client.setIdCliente(id);
+		client.setIdClient(id);
 		validateDataClient(client);
 		
 		if(isClientExist(client)){
@@ -204,11 +205,10 @@ public class ClientController {
 		Client clientResponse = clientService.findByCellphone(client.getCellphone());
 		boolean vBalid = false;
 		
-		System.err.println("client.getIdCliente() ++ " + client.getIdCliente() + " clientResponse.getIdCliente() " +clientResponse.getIdCliente());
 		
 		if(clientResponse !=null){
 			
-			if(client.getIdCliente() != clientResponse.getIdCliente()){
+			if(client.getIdClient() != clientResponse.getIdClient()){
 				logger.error("Unable to create or update. A Client with Cellphone " + client.getCellphone() +  " already exist");
 				vBalid =  true;	
 			}
