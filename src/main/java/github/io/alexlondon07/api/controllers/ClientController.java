@@ -1,7 +1,9 @@
 package github.io.alexlondon07.api.controllers;
 
+import java.awt.TrayIcon.MessageType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +34,7 @@ public class ClientController {
 	
 	public static final Logger logger = LoggerFactory.getLogger(ClientController.class);
 	private static final String JSON = "Accept=application/json";
+	private CustomErrorType customErrorType;
 	
 	@Autowired
 	ClientService clientService;
@@ -56,7 +63,7 @@ public class ClientController {
 		if(name!=null){
 			Client client = (Client) clientService.findByCellphone(name);
 			if(client == null){
-				return new ResponseEntity(new CustomErrorType("Client name " + name + " not found "), HttpStatus.NOT_FOUND);
+				return new ResponseEntity(new CustomErrorType("Client name " + name + " not found ", MessageType.ERROR ), HttpStatus.NOT_FOUND);
 			}
 		}
 		
@@ -72,62 +79,40 @@ public class ClientController {
 		
 	}
 	
+	
+	
 	// ------------------- POST Client----------------------------------------------------------------------------------
 	/**
-	 * Metodo  que se encar se crear un cliente
+	 * Metodo  para crear un cliente
 	 * @param client
 	 * @param uriBuilder
 	 * @return
 	 */
 	@RequestMapping(value="/clients", method = RequestMethod.POST, headers = JSON)
-	public ResponseEntity<?> createclient(@RequestBody Client client, UriComponentsBuilder uriBuilder){
+	public ResponseEntity<?> createclient(@Validated @RequestBody Client client, UriComponentsBuilder uriBuilder, BindingResult bindingResult){
 		
 		logger.info("Creating Client : {}", client.getName());
-		
-		CustomErrorType response = validateDataClient(client);
-		
-		if(!response.isValidationOk()){
-			return new ResponseEntity(new CustomErrorType(response.getErrorMessage()),HttpStatus.CONFLICT);
-		}
-		
-		//Create Client
-		clientService.saveClient(client);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(uriBuilder.path("/v1/clients/{id}").buildAndExpand(client.getIdClient()).toUri());
-		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
-		
+        
+		if (bindingResult.hasErrors()) {
+			
+			List<String> message = customErrorType.processValidationError(bindingResult);
+			return new ResponseEntity(new CustomErrorType(message.toString(), MessageType.ERROR),HttpStatus.BAD_REQUEST);
+        
+		} else {
+				    		
+	    		if(isClientExist(client)){
+	    			return new ResponseEntity(new CustomErrorType("Unable to create. A Client with cellphone " + client.getCellphone() + " already exist.", MessageType.ERROR),HttpStatus.CONFLICT);
+	    		}
+	    		
+	    		//Create Client
+	    		clientService.saveClient(client);
+	    		
+	    		HttpHeaders headers = new HttpHeaders();
+	    		headers.setLocation(uriBuilder.path("/v1/clients/{id}").buildAndExpand(client.getIdClient()).toUri());
+	    		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+        }
 	}
 	
-	/**
-	 * Funcion que se encarga de validar los datos obligatorios de la creación de un Cliente
-	 * @param client
-	 * @return
-	 */
-	public CustomErrorType validateDataClient(Client client){
-		
-		CustomErrorType response = new CustomErrorType("Information registered correctly");
-		response.setValidationOk(true);
-		
-		if(client.getName() == null || client.getName().isEmpty()){
-			response.setErrorMessage("Client name is required");
-			response.setValidationOk(false);
-			return response;
-		}
-		
-		if(client.getCellphone() == null || client.getCellphone().isEmpty()){
-			response.setErrorMessage("Client cellphone is required.");
-			response.setValidationOk(false);
-			return response;
-		}
-		
-		if(isClientExist(client)){
-			response.setErrorMessage("Unable to create. A Client with cellphone " + client.getCellphone() + " already exist.");
-			response.setValidationOk(false);
-			return response;
-		}
-		
-		return response;
-	}
 
 	// ------------------- UPDATE Client----------------------------------------------------------------------------------
 	/**
@@ -137,39 +122,43 @@ public class ClientController {
 	 * @return
 	 */
 	@RequestMapping(value="/clients/{id}", method = RequestMethod.PATCH, headers = JSON)
-	public ResponseEntity<Client> updateClient(@PathVariable("id") Long id, @RequestBody Client client){
+	public ResponseEntity<Client> updateClient(@Validated @PathVariable("id") Long id, @RequestBody Client client, BindingResult bindingResult){
 		
 		logger.info("Updating Client id {} ", id);
 		
 		if(id == null || id <= 0){
-			return new ResponseEntity(new CustomErrorType("idClient is required"), HttpStatus.CONFLICT);
+			return new ResponseEntity(new CustomErrorType("idClient is required", MessageType.ERROR), HttpStatus.CONFLICT);
 		}
 		
-		client.setIdClient(id);
-		validateDataClient(client);
-		
-		if(isClientExist(client)){
-			return new ResponseEntity(
-					new CustomErrorType("Unable to update. A Client with cellphone " 
-							+ client.getCellphone() + " already exist,  her name is " 
-							+ client.getName() ),HttpStatus.CONFLICT);
+		if (bindingResult.hasErrors()) {
+			List<String> message = customErrorType.processValidationError(bindingResult);
+			return new ResponseEntity(new CustomErrorType(message.toString(), MessageType.ERROR),HttpStatus.BAD_REQUEST);
+		} else {
+			
+			client.setIdClient(id);		
+			if(isClientExist(client)){
+				return new ResponseEntity(
+						new CustomErrorType("Unable to update. A Client with cellphone " 
+								+ client.getCellphone() + " already exist,  her name is " 
+								+ client.getName(), MessageType.INFO ),HttpStatus.CONFLICT);
+			}
+			
+			Client currentClient = clientService.findById(id);
+			if(currentClient == null ){
+				return new ResponseEntity(
+						new CustomErrorType("Unable to update. A Client with id " + id + " already exist.", MessageType.INFO ),
+						HttpStatus.CONFLICT);
+			}
+			currentClient.setName(client.getName());
+			currentClient.setLastName(client.getLastName());
+			currentClient.setIdentification(client.getIdentification());
+			currentClient.setCellphone(client.getCellphone());
+			currentClient.setEnable(client.getEnable());
+			
+			clientService.updateClient(currentClient);
+			return new ResponseEntity<Client>(currentClient, HttpStatus.OK);
 		}
-		
-		Client currentClient = clientService.findById(id);
-		if(currentClient == null ){
-			return new ResponseEntity(
-					new CustomErrorType("Unable to update. A Client with id " + id + " already exist."),
-					HttpStatus.CONFLICT);
-		}
-		
-		currentClient.setName(client.getName());
-		currentClient.setLastName(client.getLastName());
-		currentClient.setIdentification(client.getIdentification());
-		currentClient.setCellphone(client.getCellphone());
-		currentClient.setEnable(client.getEnable());
-		
-		clientService.updateClient(currentClient);
-		return new ResponseEntity<Client>(currentClient, HttpStatus.OK);
+
 	}
 	
 	// ------------------- DELETE Client----------------------------------------------------------------------------------
@@ -179,14 +168,14 @@ public class ClientController {
 		logger.info("fetching % Deleting Course with id {} ", id);
 		
 		if (id == null || id <= 0) {
-			return new ResponseEntity(new CustomErrorType("idClient is required"), HttpStatus.CONFLICT);
+			return new ResponseEntity(new CustomErrorType("idClient is required", MessageType.ERROR ), HttpStatus.CONFLICT);
 		}
 		
 		Client client = clientService.findById(id);
 		
 		if(client == null){
 			return new ResponseEntity(
-					new CustomErrorType("Unable to delete. A Client with id " + id + " not found."),
+					new CustomErrorType("Unable to delete. A Client with id " + id + " not found.", MessageType.INFO ),
 					HttpStatus.NOT_FOUND);
 		}
 		
@@ -204,8 +193,7 @@ public class ClientController {
 		
 		Client clientResponse = clientService.findByCellphone(client.getCellphone());
 		boolean vBalid = false;
-		
-		
+	
 		if(clientResponse !=null){
 			
 			if(client.getIdClient() != clientResponse.getIdClient()){

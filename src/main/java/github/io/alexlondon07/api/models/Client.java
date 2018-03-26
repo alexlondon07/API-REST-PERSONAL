@@ -8,6 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 
 @Entity
@@ -25,22 +29,30 @@ public class Client implements Serializable {
 	private Long idClient;
 	
 	@Column(name="name")
+	@NotNull
+	@Size(min=3, max=90)
 	private String name;
 	
 	@Column(name="last_name")
+	@Size(max=90)
 	private String lastName;
 	
 	@Column(name="identification")
+	@Size(max=10)
 	private String identification;
 	
 	@Column(name="cellphone")
+	@NotNull
+	@Size(min=8, max=10)
 	private String cellphone;
 	
 	@Column(name="city")
+	@Size(max=45)
 	private String city;
 	
 	@Column(name="enable")
-	private char enable;
+	@Size(max=1)
+	private String enable;
 	
 	
 	//Constructors
@@ -48,7 +60,7 @@ public class Client implements Serializable {
 		super();
 	}
 	
-	public Client(String name, String lastName, String cellphone, String city, char enable) {
+	public Client(String name, String lastName, String cellphone, String city, String enable) {
 		super();
 		this.name = name;
 		this.lastName = lastName;
@@ -88,10 +100,10 @@ public class Client implements Serializable {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public char getEnable() {
+	public String getEnable() {
 		return enable;
 	}
-	public void setEnable(char enable) {
+	public void setEnable(String enable) {
 		this.enable = enable;
 	}
 	
