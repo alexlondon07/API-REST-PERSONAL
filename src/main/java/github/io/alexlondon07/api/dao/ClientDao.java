@@ -17,4 +17,6 @@ public interface ClientDao {
 	Client findByCellphone ( String name);
 	
 	List<Client> findAllClients();
+	
+	boolean isClientExist(Client client);
 }

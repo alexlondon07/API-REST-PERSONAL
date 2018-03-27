@@ -39,13 +39,10 @@ public class ClientController {
 	@Autowired
 	ClientService clientService;
 	
+	
 	// ------------------- GET Client----------------------------------------------------------------------------------
-	/**
-	 * Metodo para obtener el listado de los clientes Ingresados al sistema.
-	 * @param name
-	 * @param idClient
-	 * @return
-	 */
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/clients", method = RequestMethod.GET, headers = JSON)
 	public @ResponseBody ResponseEntity<List<Client>> getClients(@RequestParam(value="name", required=false) String name, @RequestParam(value = "id_client", required = false) Long idClient){
 
@@ -76,18 +73,12 @@ public class ClientController {
 		}
 		
 		return new ResponseEntity(clients, HttpStatus.OK);
-		
 	}
 	
-	
-	
+
 	// ------------------- POST Client----------------------------------------------------------------------------------
-	/**
-	 * Metodo  para crear un cliente
-	 * @param client
-	 * @param uriBuilder
-	 * @return
-	 */
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/clients", method = RequestMethod.POST, headers = JSON)
 	public ResponseEntity<?> createclient(@Validated @RequestBody Client client, UriComponentsBuilder uriBuilder, BindingResult bindingResult){
 		
@@ -100,7 +91,7 @@ public class ClientController {
         
 		} else {
 				    		
-	    		if(isClientExist(client)){
+	    		if(clientService.isClientExist(client)){
 	    			return new ResponseEntity(new CustomErrorType("Unable to create. A Client with cellphone " + client.getCellphone() + " already exist.", MessageType.ERROR),HttpStatus.CONFLICT);
 	    		}
 	    		
@@ -115,12 +106,8 @@ public class ClientController {
 	
 
 	// ------------------- UPDATE Client----------------------------------------------------------------------------------
-	/**
-	 * Metodo que sirve para actualizar la Información de Client
-	 * @param id
-	 * @param client
-	 * @return
-	 */
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/clients/{id}", method = RequestMethod.PATCH, headers = JSON)
 	public ResponseEntity<Client> updateClient(@Validated @PathVariable("id") Long id, @RequestBody Client client, BindingResult bindingResult){
 		
@@ -131,12 +118,16 @@ public class ClientController {
 		}
 		
 		if (bindingResult.hasErrors()) {
+			
 			List<String> message = customErrorType.processValidationError(bindingResult);
 			return new ResponseEntity(new CustomErrorType(message.toString(), MessageType.ERROR),HttpStatus.BAD_REQUEST);
+		
 		} else {
 			
-			client.setIdClient(id);		
-			if(isClientExist(client)){
+			client.setIdClient(id);	
+			
+			//Validate if Client exist in the database
+			if(clientService.isClientExist(client)){
 				return new ResponseEntity(
 						new CustomErrorType("Unable to update. A Client with cellphone " 
 								+ client.getCellphone() + " already exist,  her name is " 
@@ -161,7 +152,10 @@ public class ClientController {
 
 	}
 	
+	
 	// ------------------- DELETE Client----------------------------------------------------------------------------------
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/clients/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteCourse(@PathVariable("id") Long id){
 		
@@ -182,26 +176,6 @@ public class ClientController {
 		clientService.deleteClient(id);
 		return new ResponseEntity<Client>(HttpStatus.OK);
 		
-	}
-
-	/**
-	 * Metodo que valida si un cliente ya existe en el sistema registrado con el mismo número de Teléfono
-	 * @param client
-	 * @return
-	 */
-	private boolean isClientExist(Client client) {
-		
-		Client clientResponse = clientService.findByCellphone(client.getCellphone());
-		boolean vBalid = false;
-	
-		if(clientResponse !=null){
-			
-			if(client.getIdClient() != clientResponse.getIdClient()){
-				logger.error("Unable to create or update. A Client with Cellphone " + client.getCellphone() +  " already exist");
-				vBalid =  true;	
-			}
-		}
-		return vBalid;
 	}
 	
 }

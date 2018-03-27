@@ -18,4 +18,6 @@ public interface ClientService {
 	Client findByCellphone ( String number);
 		
 	List<Client> findAllClients();
+	
+	boolean isClientExist(Client client);
 }

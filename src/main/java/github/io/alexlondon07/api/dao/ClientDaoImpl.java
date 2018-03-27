@@ -52,4 +52,18 @@ public class ClientDaoImpl extends AbstractSession implements ClientDao {
 		return getSession().createQuery("from Client").list();
 	}
 
+	@Override
+	public boolean isClientExist(Client client) {
+		Client clientResponse = findByCellphone(client.getCellphone());
+		boolean vBalid = false;
+	
+		if(clientResponse !=null){
+			
+			if(client.getIdClient() != clientResponse.getIdClient()){
+				vBalid =  true;	
+			}
+		}
+		return vBalid;
+	}
+
 }

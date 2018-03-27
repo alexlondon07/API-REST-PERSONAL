@@ -30,7 +30,7 @@ public class Client implements Serializable {
 	
 	@Column(name="name")
 	@NotNull
-	@Size(min=3, max=90)
+	@Size(max=90)
 	private String name;
 	
 	@Column(name="last_name")
@@ -43,7 +43,7 @@ public class Client implements Serializable {
 	
 	@Column(name="cellphone")
 	@NotNull
-	@Size(min=8, max=10)
+	@Size(max=10)
 	private String cellphone;
 	
 	@Column(name="city")

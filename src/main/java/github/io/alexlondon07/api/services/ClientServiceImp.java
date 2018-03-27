@@ -46,4 +46,9 @@ public class ClientServiceImp implements ClientService {
 	public List<Client> findAllClients() {
 		return clienteDao.findAllClients();
 	}
+
+	@Override
+	public boolean isClientExist(Client client) {
+		return clienteDao.isClientExist(client);
+	}
 }
