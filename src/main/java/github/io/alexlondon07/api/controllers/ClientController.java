@@ -27,6 +27,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import github.io.alexlondon07.api.models.Client;
 import github.io.alexlondon07.api.services.ClientService;
 import util.CustomErrorType;
+import util.DataValidator;
 
 @Controller
 @RequestMapping("/v1")
@@ -38,6 +39,8 @@ public class ClientController {
 	
 	@Autowired
 	ClientService clientService;
+	
+	DataValidator validator;
 	
 	
 	// ------------------- GET Client----------------------------------------------------------------------------------
@@ -57,7 +60,7 @@ public class ClientController {
 		}
 		
 		//Search for client name
-		if(name!=null){
+		if(validator.isNotEmpty(name)){
 			Client client = (Client) clientService.findByCellphone(name);
 			if(client == null){
 				return new ResponseEntity(new CustomErrorType("Client name " + name + " not found ", MessageType.ERROR ), HttpStatus.NOT_FOUND);
@@ -65,7 +68,7 @@ public class ClientController {
 		}
 		
 		//If id_client and name are null, Get all Clients in database
-		if(name == null && idClient == null){
+		if(validator.isEmpty(name) && idClient == null){
 			clients = clientService.findAllClients();
 			if(clients.isEmpty()){
 				return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -102,7 +105,7 @@ public class ClientController {
 	    		headers.setLocation(uriBuilder.path("/v1/clients/{id}").buildAndExpand(client.getIdClient()).toUri());
 	    		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
         }
-	}
+	} 
 	
 
 	// ------------------- UPDATE Client----------------------------------------------------------------------------------
@@ -113,7 +116,7 @@ public class ClientController {
 		
 		logger.info("Updating Client id {} ", id);
 		
-		if(id == null || id <= 0){
+		if (validator.isEmptyLong(id)) {
 			return new ResponseEntity(new CustomErrorType("idClient is required", MessageType.ERROR), HttpStatus.CONFLICT);
 		}
 		
@@ -161,7 +164,7 @@ public class ClientController {
 		
 		logger.info("fetching % Deleting Course with id {} ", id);
 		
-		if (id == null || id <= 0) {
+		if (validator.isEmptyLong(id)) {
 			return new ResponseEntity(new CustomErrorType("idClient is required", MessageType.ERROR ), HttpStatus.CONFLICT);
 		}
 		

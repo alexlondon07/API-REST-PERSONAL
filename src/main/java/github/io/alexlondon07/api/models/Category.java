@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="category")
@@ -24,13 +26,17 @@ public class Category implements Serializable{
 	private int idCategory;
 	
 	@Column(name="name")
+	@NotNull
+	@Size(max=100)
 	private String name;
 	
 	@Column(name="description")
+	@Size(max=200)
 	private String description;
 
 	@Column(name="enable")
-	private char enable;
+	@Size(max=1)
+	private String enable;
 
 	
 	//Constructors
@@ -38,7 +44,7 @@ public class Category implements Serializable{
 		super();
 	}
 	
-	public Category(String name, String description, char enable) {
+	public Category(String name, String description, String enable) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -70,11 +76,11 @@ public class Category implements Serializable{
 		this.description = description;
 	}
 
-	public char getEnable() {
+	public String getEnable() {
 		return enable;
 	}
 
-	public void setEnable(char enable) {
+	public void setEnable(String enable) {
 		this.enable = enable;
 	}
 }

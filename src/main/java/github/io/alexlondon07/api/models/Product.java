@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -30,15 +32,18 @@ public class Product implements Serializable{
 	private int idProduct;
 	
 	@Column(name="name")
+	@NotNull
 	private String name;
 	
 	@Column(name="description")
 	private String description;
 	
 	@Column(name="cost")
+	@NotNull
 	private double cost;
 	
 	@Column(name="price")
+	@NotNull
 	private double price;
 	
 	@Column(name="enable")
