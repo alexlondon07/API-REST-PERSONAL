@@ -54,13 +54,13 @@ public class ClientController {
 		//Search for client id_client 
 		if(idClient !=null){
 			clients = (List<Client>) clientService.findById(idClient);
-			if(clients.isEmpty()){
+			if(clients == null){
 				return new ResponseEntity(HttpStatus.NOT_FOUND);
 			}
 		}
 		
 		//Search for client name
-		if(validator.isNotEmpty(name)){
+		if(name !=null){
 			Client client = (Client) clientService.findByCellphone(name);
 			if(client == null){
 				return new ResponseEntity(new CustomErrorType("Client name " + name + " not found ", MessageType.ERROR ), HttpStatus.NOT_FOUND);
@@ -68,9 +68,9 @@ public class ClientController {
 		}
 		
 		//If id_client and name are null, Get all Clients in database
-		if(validator.isEmpty(name) && idClient == null){
+		if(name == null && idClient == null){
 			clients = clientService.findAllClients();
-			if(clients.isEmpty()){
+			if(clients == null){
 				return new ResponseEntity(HttpStatus.NOT_FOUND);
 			}
 		}
