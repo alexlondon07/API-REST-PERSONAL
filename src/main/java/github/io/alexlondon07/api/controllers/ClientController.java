@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,11 +27,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import github.io.alexlondon07.api.models.Client;
 import github.io.alexlondon07.api.services.ClientService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import util.CustomErrorType;
 import util.DataValidator;
 
 @Controller
-@RequestMapping("/v1")
+@RequestMapping("/api/v1")
+@Api(value="ClientControllerAPI", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ClientController {
 	
 	public static final Logger logger = LoggerFactory.getLogger(ClientController.class);
@@ -46,13 +52,15 @@ public class ClientController {
 	// ------------------- GET Client----------------------------------------------------------------------------------
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@ApiOperation("Gets the clients with specific id_client or name")
+	@ApiResponses(value= { @ApiResponse(code =200, message = "OK", response = Client.class) })
 	@RequestMapping(value="/clients", method = RequestMethod.GET, headers = JSON)
 	public @ResponseBody ResponseEntity<List<Client>> getClients(@RequestParam(value="name", required=false) String name, @RequestParam(value = "id_client", required = false) Long idClient){
 
 		List<Client> clients = new ArrayList<>();
 		
 		//Search for client id_client 
-		if(idClient !=null){
+		if(idClient !=null && idClient > 0){
 			clients = (List<Client>) clientService.findById(idClient);
 			if(clients == null){
 				return new ResponseEntity(HttpStatus.NOT_FOUND);
