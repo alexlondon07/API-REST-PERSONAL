@@ -26,7 +26,7 @@ public class Client implements Serializable {
 	@Id
 	@Column(name="ide_client")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long idClient;
+	private Long ideClient;
 	
 	@Column(name="name")
 	@NotNull
@@ -71,10 +71,10 @@ public class Client implements Serializable {
 
 	//Getter and Setters
 	public Long getIdClient() {
-		return idClient;
+		return ideClient;
 	}	
 	public void setIdClient(Long idCliente) {
-		this.idClient = idCliente;
+		this.ideClient = idCliente;
 	}
 	public String getName() {
 		return name;
@@ -113,5 +113,11 @@ public class Client implements Serializable {
 
 	public void setIdentification(String identification) {
 		this.identification = identification;
+	}
+
+	@Override
+	public String toString() {
+		return "Client [idClient=" + ideClient + ", name=" + name + ", lastName=" + lastName + ", identification="
+				+ identification + ", cellphone=" + cellphone + ", city=" + city + ", enable=" + enable + "]";
 	}
 }

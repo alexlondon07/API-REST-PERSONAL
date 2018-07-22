@@ -3,7 +3,6 @@ package github.io.alexlondon07.api.controllers;
 import java.awt.TrayIcon.MessageType;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import github.io.alexlondon07.api.models.Client;
-import github.io.alexlondon07.api.services.ClientService;
+import github.io.alexlondon07.api.services.client.ClientService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -39,6 +36,7 @@ import util.DataValidator;
 @Api(value="ClientControllerAPI", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ClientController {
 	
+	//Variables Globales
 	public static final Logger logger = LoggerFactory.getLogger(ClientController.class);
 	private static final String JSON = "Accept=application/json";
 	private CustomErrorType customErrorType;
@@ -55,23 +53,27 @@ public class ClientController {
 	@ApiOperation("Gets the clients with specific id_client or name")
 	@ApiResponses(value= { @ApiResponse(code =200, message = "OK", response = Client.class) })
 	@RequestMapping(value="/clients", method = RequestMethod.GET, headers = JSON)
-	public @ResponseBody ResponseEntity<List<Client>> getClients(@RequestParam(value="name", required=false) String name, @RequestParam(value = "id_client", required = false) Long idClient){
+	public @ResponseBody ResponseEntity<List<Client>> getClients(@RequestParam(value="name", required=false) String name, @RequestParam(value = "ide_client", required = false) Long idClient){
 
 		List<Client> clients = new ArrayList<>();
 		
 		//Search for client id_client 
 		if(idClient !=null && idClient > 0){
-			clients = (List<Client>) clientService.findById(idClient);
-			if(clients == null){
-				return new ResponseEntity(HttpStatus.NOT_FOUND);
+			Client client =  clientService.findById(idClient);
+			if(client == null){
+				return new ResponseEntity(new CustomErrorType("Client with ide_client " + idClient + " not found ", MessageType.ERROR ), HttpStatus.NOT_FOUND);
+			}else {
+				return new ResponseEntity(client, HttpStatus.OK);
 			}
 		}
 		
 		//Search for client name
 		if(name !=null){
-			Client client = (Client) clientService.findByCellphone(name);
+			Client client = clientService.findByCellphone(name);
 			if(client == null){
 				return new ResponseEntity(new CustomErrorType("Client name " + name + " not found ", MessageType.ERROR ), HttpStatus.NOT_FOUND);
+			}else {
+				return new ResponseEntity(client, HttpStatus.OK);
 			}
 		}
 		
@@ -90,6 +92,8 @@ public class ClientController {
 	// ------------------- POST Client----------------------------------------------------------------------------------
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@ApiOperation("Create client")
+	@ApiResponses(value= { @ApiResponse(code =201, message = "OK", response = Client.class) })
 	@RequestMapping(value="/clients", method = RequestMethod.POST, headers = JSON)
 	public ResponseEntity<?> createclient(@Validated @RequestBody Client client, UriComponentsBuilder uriBuilder, BindingResult bindingResult){
 		
@@ -119,6 +123,8 @@ public class ClientController {
 	// ------------------- UPDATE Client----------------------------------------------------------------------------------
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@ApiOperation("Update client with specific id")
+	@ApiResponses(value= { @ApiResponse(code =200, message = "OK", response = Client.class) })
 	@RequestMapping(value="/clients/{id}", method = RequestMethod.PATCH, headers = JSON)
 	public ResponseEntity<Client> updateClient(@Validated @PathVariable("id") Long id, @RequestBody Client client, BindingResult bindingResult){
 		
@@ -167,11 +173,13 @@ public class ClientController {
 	// ------------------- DELETE Client----------------------------------------------------------------------------------
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@ApiOperation("Delete client with specific id")
+	@ApiResponses(value= { @ApiResponse(code =200, message = "OK", response = Client.class) })
 	@RequestMapping(value = "/clients/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteCourse(@PathVariable("id") Long id){
 		
 		logger.info("fetching % Deleting Course with id {} ", id);
-		
+	
 		if (validator.isEmptyLong(id)) {
 			return new ResponseEntity(new CustomErrorType("idClient is required", MessageType.ERROR ), HttpStatus.CONFLICT);
 		}

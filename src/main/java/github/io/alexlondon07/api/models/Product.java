@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,7 +30,7 @@ public class Product implements Serializable{
 	@Id
 	@Column(name="ide_product")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idProduct;
+	private int ideProduct;
 	
 	@Column(name="name")
 	@NotNull
@@ -47,6 +48,7 @@ public class Product implements Serializable{
 	private double price;
 	
 	@Column(name="enable")
+	@Size(max=1)
 	private char enable;
 	
 	@ManyToOne(optional=true, fetch=FetchType.EAGER)
@@ -114,5 +116,12 @@ public class Product implements Serializable{
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [ideProduct=" + ideProduct + ", name=" + name + ", description=" + description + ", cost="
+				+ cost + ", price=" + price + ", enable=" + enable + ", category=" + category + "]";
 	}	
+	
 }

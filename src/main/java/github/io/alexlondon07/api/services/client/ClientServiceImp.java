@@ -1,4 +1,5 @@
-package github.io.alexlondon07.api.services;
+package github.io.alexlondon07.api.services.client;
+
 
 import java.util.List;
 
@@ -7,7 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import github.io.alexlondon07.api.dao.ClientDao;
+import github.io.alexlondon07.api.dao.client.ClientDao;
 import github.io.alexlondon07.api.models.Client;
 
 @Service("clientService")

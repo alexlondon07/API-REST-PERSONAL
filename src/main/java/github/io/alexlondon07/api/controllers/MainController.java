@@ -10,7 +10,7 @@ public class MainController {
 	@RequestMapping("/")
 	@ResponseBody
 	public String index(){
-		String response = "Welcome to our REST API with Spring - EmiStore";
+		String response = "Welcome to our REST API with Spring - EmiStore  https://www.instagram.com/emistorefashion/";
 		return response;
 	}
 

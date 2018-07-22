@@ -23,7 +23,7 @@ public class Category implements Serializable{
 	@Id
 	@Column(name ="ide_category")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idCategory;
+	private Long ideCategory;
 	
 	@Column(name="name")
 	@NotNull
@@ -52,12 +52,12 @@ public class Category implements Serializable{
 	}
 
 	//Getters and Setters
-	public int getIdCategory() {
-		return idCategory;
+	public Long getIdCategory() {
+		return ideCategory;
 	}
 
-	public void setIdCategory(int idCategory) {
-		this.idCategory = idCategory;
+	public void setIdCategory(Long idCategory) {
+		this.ideCategory = idCategory;
 	}
 
 	public String getName() {
@@ -83,4 +83,11 @@ public class Category implements Serializable{
 	public void setEnable(String enable) {
 		this.enable = enable;
 	}
+
+	@Override
+	public String toString() {
+		return "Category [ideCategory=" + ideCategory + ", name=" + name + ", description=" + description + ", enable="
+				+ enable + "]";
+	}
+	
 }

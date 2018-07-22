@@ -1,21 +1,22 @@
-package github.io.alexlondon07.api.dao;
+
+package github.io.alexlondon07.api.services.client;
 
 import java.util.List;
 
 import github.io.alexlondon07.api.models.Client;
 
-public interface ClientDao {
+public interface ClientService {
 	
 	void saveClient( Client client);
 	
 	void updateClient ( Client client );
 	
-	void deleteClient ( Long idClient);
+	void deleteClient ( long idClient);
 	
-	Client findById( Long idClient);
+	Client findById( long idClient);
 	
-	Client findByCellphone ( String name);
-	
+	Client findByCellphone ( String number);
+		
 	List<Client> findAllClients();
 	
 	boolean isClientExist(Client client);
