@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity
@@ -29,11 +30,12 @@ public class Client implements Serializable {
 	private Long ideClient;
 	
 	@Column(name="name")
-	@NotNull
+	@NotEmpty(message = "Name is a required field")
 	@Size(max=90)
 	private String name;
 	
 	@Column(name="last_name")
+	@NotEmpty(message = "Last name is a required field")
 	@Size(max=90)
 	private String lastName;
 	
@@ -42,11 +44,12 @@ public class Client implements Serializable {
 	private String identification;
 	
 	@Column(name="cellphone")
-	@NotNull
+	@NotEmpty(message = "Cellphone is a required field")
 	@Size(max=10)
 	private String cellphone;
 	
 	@Column(name="city")
+	@NotEmpty(message = "City is a required field")
 	@Size(max=45)
 	private String city;
 	

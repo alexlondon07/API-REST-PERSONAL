@@ -11,8 +11,11 @@ public class DataValidator {
 	}
 
 	public boolean isEmptyLong(Long input) {
-		return (input == null || input <= 0);
+		return input == null || input == 0;
 	}
 	
+    public boolean checkInputString(String input) {
+        return (input == null || input.trim().length() == 0);
+    }
 	
 }
