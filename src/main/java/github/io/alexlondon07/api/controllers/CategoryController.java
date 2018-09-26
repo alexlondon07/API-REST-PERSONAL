@@ -34,7 +34,7 @@ import util.CustomErrorType;
 import util.DataValidator;
 
 @Controller
-@RequestMapping("/api/v1")
+@RequestMapping(Constants.API_VERSION)
 @Api(value="CategoryControllerAPI", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CategoryController {
 
@@ -80,7 +80,7 @@ public class CategoryController {
 		if(name == null && ideCategory == null){
 			categories = categoryService.findAllCategories();
 			if(categories.isEmpty() ){
-				return new ResponseEntity(new CustomErrorType(Constants.NO_RESULTS, MessageType.ERROR ), HttpStatus.NOT_FOUND);
+				return new ResponseEntity(new CustomErrorType(Constants.NO_RESULTS, MessageType.INFO ), HttpStatus.NOT_FOUND);
 			}
 		}
 		

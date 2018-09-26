@@ -33,7 +33,7 @@ import util.CustomErrorType;
 import util.DataValidator;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping(Constants.API_VERSION)
 @Api(value="ClientControllerAPI", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ClientController {
 	
@@ -81,7 +81,7 @@ public class ClientController {
 		if(name == null && idClient == null){
 			clients = clientService.findAllClients();
 			if(clients.isEmpty()){				
-				return new ResponseEntity(new CustomErrorType(Constants.NO_RESULTS, MessageType.ERROR ), HttpStatus.NOT_FOUND);
+				return new ResponseEntity(new CustomErrorType(Constants.NO_RESULTS, MessageType.INFO ), HttpStatus.NOT_FOUND);
 			}
 		}
 		
@@ -178,7 +178,7 @@ public class ClientController {
 	@RequestMapping(value = "/client/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity deleteClient(@PathVariable("id") Long id){
 		
-		logger.info("fetching % Deleting Course with id {} ", id);
+		logger.info("fetching % Deleting Client with id {} ", id);
 	
 		if(id == null || id <= 0) {
 			return new ResponseEntity(new CustomErrorType("idClient is required", MessageType.ERROR ), HttpStatus.CONFLICT);

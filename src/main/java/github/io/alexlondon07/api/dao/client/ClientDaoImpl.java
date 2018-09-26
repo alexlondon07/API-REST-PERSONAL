@@ -29,7 +29,7 @@ public class ClientDaoImpl extends AbstractSession implements ClientDao {
 	@Override
 	public void deleteClient(Long id) {
 		
-		if(id!=null){
+		if(id!=null && id > 0){
 			Client client = findById(id);
 			getSession().delete(client);
 		}
@@ -48,6 +48,7 @@ public class ClientDaoImpl extends AbstractSession implements ClientDao {
 		.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Client> findAllClients() {
 		return getSession().createQuery("from Client").list();

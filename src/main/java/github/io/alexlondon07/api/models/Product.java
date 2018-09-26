@@ -1,7 +1,6 @@
 package github.io.alexlondon07.api.models;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,12 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name ="products")
@@ -30,26 +28,28 @@ public class Product implements Serializable{
 	@Id
 	@Column(name="ide_product")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int ideProduct;
+	private Long ideProduct;
 	
 	@Column(name="name")
-	@NotNull
+	@NotEmpty(message = "Name is a required field")
+	@Size(max=150)
 	private String name;
 	
 	@Column(name="description")
+	@Size(max=300)
 	private String description;
 	
 	@Column(name="cost")
-	@NotNull
-	private double cost;
+	@NotEmpty(message = "Cost is a required field")
+	private String cost;
 	
 	@Column(name="price")
-	@NotNull
-	private double price;
+	@NotEmpty(message = "Price is a required field")
+	private String price;
 	
 	@Column(name="enable")
 	@Size(max=1)
-	private char enable;
+	private String enable;
 	
 	@ManyToOne(optional=true, fetch=FetchType.EAGER)
 	@JoinColumn(name="ide_category")
@@ -60,7 +60,7 @@ public class Product implements Serializable{
 		super();
 	}
 
-	public Product(String name, String description, double cost, double price, char enable) {
+	public Product(String name, String description, String cost, String price, String enable) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -69,7 +69,15 @@ public class Product implements Serializable{
 		this.enable = enable;
 	}
 
-	//Getters and Setters
+	//Getters and Setters	
+	public Long getIdeProduct() {
+		return ideProduct;
+	}
+
+	public void setIdeProduct(Long ideProduct) {
+		this.ideProduct = ideProduct;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -86,27 +94,27 @@ public class Product implements Serializable{
 		this.description = description;
 	}
 
-	public double getCost() {
+	public String getCost() {
 		return cost;
 	}
 
-	public void setCost(double cost) {
+	public void setCost(String cost) {
 		this.cost = cost;
 	}
 
-	public double getPrice() {
+	public String getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 
-	public char getEnable() {
+	public String getEnable() {
 		return enable;
 	}
 
-	public void setEnable(char enable) {
+	public void setEnable(String enable) {
 		this.enable = enable;
 	}
 

@@ -33,16 +33,16 @@ public class DataBaseConfiguration {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		
 		//LOCAL
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");				
+		/*dataSource.setDriverClassName("com.mysql.jdbc.Driver");				
 		dataSource.setUrl("jdbc:mysql://localhost:3306/api_accounting");
 		dataSource.setUsername("api_accounting");
-		dataSource.setPassword("api_accounting");
+		dataSource.setPassword("api_accounting");*/
 		
 		//HEROKU
-		/*dataSource.setDriverClassName("com.mysql.jdbc.Driver");				
+		dataSource.setDriverClassName("com.mysql.jdbc.Driver");				
 		dataSource.setUrl("jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_546bda58cab430c");
 		dataSource.setUsername("b84d09cf56eb8a");
-		dataSource.setPassword("9c894417");	*/
+		dataSource.setPassword("9c894417");
 		
 		/* dataSource.setDriverClassName("com.mysql.jdbc.Driver");		
 		dataSource.setUrl("jdbc:mysql://db.secuencia24.com/test_db?useSSL=false");
