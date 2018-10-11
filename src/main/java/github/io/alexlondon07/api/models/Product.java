@@ -47,10 +47,25 @@ public class Product implements Serializable{
 	@NotEmpty(message = "Price is a required field")
 	private String price;
 	
+	@Column(name="image")
+	private String image;
+	
 	@Column(name="enable")
 	@Size(max=1)
 	private String enable;
 	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@ManyToOne(optional=true, fetch=FetchType.EAGER)
 	@JoinColumn(name="ide_category")
 	private Category category;
@@ -60,13 +75,14 @@ public class Product implements Serializable{
 		super();
 	}
 
-	public Product(String name, String description, String cost, String price, String enable) {
+	public Product(String name, String description, String cost, String price, String enable, String image) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.cost = cost;
 		this.price = price;
 		this.enable = enable;
+		this.image = image;
 	}
 
 	//Getters and Setters	

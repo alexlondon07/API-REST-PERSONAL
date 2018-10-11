@@ -1,7 +1,13 @@
 package github.io.alexlondon07.api.controllers;
 
 import java.awt.TrayIcon.MessageType;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -20,7 +26,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
+
 
 import github.io.alexlondon07.api.models.Product;
 import github.io.alexlondon07.api.services.product.ProductService;
@@ -42,6 +50,8 @@ public class ProductController {
 	
 	@Autowired
 	ProductService productService;
+	
+	public static final String PRODUCT_UPLOADED_FOLDER ="images/products/";
 	
 	// ------------------- GET Products----------------------------------------------------------------------------------
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -117,6 +127,127 @@ public class ProductController {
 	} 
 	
 	
+	// ------------------- POST Product Create Product Image----------------------------------------------------------------------------------
+		@ApiOperation("Upload Product Image")
+		@ApiResponses(value= { @ApiResponse(code =201, message = "OK", response = Product.class) })
+		@RequestMapping(value="/products/images", method = RequestMethod.POST, headers=("content-type=multipart/form-data"))
+		public ResponseEntity<byte[]> uploadProductImage(@RequestParam("ide_product") Long idProduct,  @RequestParam("image") MultipartFile multipartFile,  UriComponentsBuilder componentsBuilder){
+			
+			if (idProduct == null) {
+				return new ResponseEntity(new CustomErrorType("Please set id_product", MessageType.INFO), HttpStatus.NO_CONTENT);
+			}
+			
+			if (multipartFile.isEmpty()) {
+				return new ResponseEntity(new CustomErrorType("Please select a file to upload", MessageType.INFO), HttpStatus.NO_CONTENT);
+			}
+			
+			//Buscamos la información del Producto
+			Product product = productService.findById(idProduct);
+			if (product == null) {
+				return new ResponseEntity(new CustomErrorType("Product with id_product: " + idProduct + " not dfound", MessageType.ERROR), HttpStatus.NOT_FOUND);
+			}
+			
+			//Validamos si la imagen no está vacio o no está null, Eliminamos la imagen
+			if (product.getImage() != null) {
+				
+				String fileName = product.getImage();
+				Path path = Paths.get(fileName);
+				File f = path.toFile();
+				
+				if (f.exists()) {
+					f.delete();
+				}
+			}
+			
+			//Se procede a Subir la imagen
+			try {
+				Date date = new Date();
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+				String dateName = dateFormat.format(date);
+				
+				String fileName = String.valueOf(idProduct) + "-pictureProduct-" + dateName + "." + multipartFile.getContentType().split("/")[1];
+				product.setImage(PRODUCT_UPLOADED_FOLDER + fileName);
+				
+				byte[] bytes = multipartFile.getBytes();
+				Path path = Paths.get(PRODUCT_UPLOADED_FOLDER + fileName);
+				Files.write(path, bytes);
+				
+				//Se sube la imagen del Producto
+				productService.updateProduct(product);
+				return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity(new CustomErrorType("Error during upload: " + multipartFile.getOriginalFilename(), MessageType.ERROR),HttpStatus.CONFLICT);
+			}
+	}
+	
+		
+		// ------------------- Get Image---------------------------------------------------------------------------------------------------------------
+		@ApiOperation("Get Product Image")
+		@ApiResponses(value= { @ApiResponse(code =201, message = "OK", response = Product.class) })
+		@RequestMapping(value="/products/{ide_product}/images", method = RequestMethod.GET)
+		public ResponseEntity<byte[]> getProductImage(@PathVariable("ide_product") Long idProduct){
+			
+			if (idProduct == null) {
+				 return new ResponseEntity(new CustomErrorType("Please set id_product ", MessageType.INFO), HttpStatus.NO_CONTENT);
+			}
+			
+			Product product = productService.findById(idProduct);
+			if (product == null) {
+				return new ResponseEntity(new CustomErrorType("Product with id_product: " + idProduct + " not found", MessageType.INFO), HttpStatus.NOT_FOUND);
+			}
+			
+			try {
+				
+				String fileName = product.getImage();
+				Path path = Paths.get(fileName);
+				File f = path.toFile();
+				if (!f.exists()) {
+					return new ResponseEntity(new CustomErrorType("Image not found", MessageType.ERROR),HttpStatus.CONFLICT);
+				}
+				
+				byte[] image = Files.readAllBytes(path);
+				return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity(new CustomErrorType("Error to show image", MessageType.ERROR),HttpStatus.CONFLICT);
+			}
+		
+	}
+		
+	// ------------------- Delete Image------------------------------------------------------------------------------------------------------
+	@ApiOperation("Delete Product Image")
+	@ApiResponses(value= { @ApiResponse(code =201, message = "OK", response = Product.class) })
+	@RequestMapping(value="/products/{ide_product}/images", method = RequestMethod.DELETE,headers = "Accept=application/json")
+	public ResponseEntity<?> deleteProductImage(@PathVariable("ide_product") Long idProduct){
+		
+		if (idProduct == null) {
+			 return new ResponseEntity(new CustomErrorType("Please set ide_product ", MessageType.INFO), HttpStatus.NO_CONTENT);
+		}
+		
+		Product product = productService.findById(idProduct);
+		if (product == null) {
+			return new ResponseEntity(new CustomErrorType("Product with ide_product: " + idProduct + " not found", MessageType.ERROR), HttpStatus.NOT_FOUND);
+		}
+		
+		if (product.getImage() == null) {
+			 return new ResponseEntity(new CustomErrorType("This Product dosen't have image assigned", MessageType.ERROR), HttpStatus.NO_CONTENT);
+		}
+		
+		String fileName = product.getImage();
+		Path path = Paths.get(fileName);
+		File file = path.toFile();
+		if (file.exists()) {
+			file.delete();
+		}
+		
+		product.setImage("");
+		productService.updateProduct(product);
+		
+		return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
+	}
 	// ------------------- UPDATE Product----------------------------------------------------------------------------------
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
