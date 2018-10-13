@@ -54,17 +54,6 @@ public class Product implements Serializable{
 	@Size(max=1)
 	private String enable;
 	
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	@ManyToOne(optional=true, fetch=FetchType.EAGER)
 	@JoinColumn(name="ide_category")
@@ -75,17 +64,24 @@ public class Product implements Serializable{
 		super();
 	}
 
-	public Product(String name, String description, String cost, String price, String enable, String image) {
+	public Product(String name, String description, String cost, String price, String enable) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.cost = cost;
 		this.price = price;
 		this.enable = enable;
-		this.image = image;
 	}
 
 	//Getters and Setters	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
 	public Long getIdeProduct() {
 		return ideProduct;
 	}

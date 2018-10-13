@@ -103,11 +103,8 @@ public class ProductController {
 		logger.info("Creating Product : {}", product.getName());
 	        
 		if (bindingResult.hasErrors()) {
-			
-			List<String> message = customErrorType.processValidationError(bindingResult);
-			return new ResponseEntity(new CustomErrorType(message.toString(), MessageType.ERROR),HttpStatus.BAD_REQUEST);
-			
-		}else {
+			return new ResponseEntity(new CustomErrorType(bindingResult.getAllErrors().toString(), MessageType.ERROR),HttpStatus.BAD_REQUEST);
+		} else {
 			
 			//Validate if Product exist in the database
 			if(productService.isProductExist(product)){
