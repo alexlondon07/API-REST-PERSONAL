@@ -28,12 +28,12 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void deleteCategory(Long idCategory) {
+	public void deleteCategory(long idCategory) {
 		categoryDao.deleteCategory(idCategory);
 	}
 
 	@Override
-	public Category findById(Long id) {
+	public Category findById(long id) {
 		return categoryDao.findById(id);
 	}
 

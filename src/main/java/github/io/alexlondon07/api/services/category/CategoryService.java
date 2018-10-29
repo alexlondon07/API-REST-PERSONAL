@@ -10,9 +10,9 @@ public interface CategoryService {
 	
 	void updateCategory(Category category);
 	
-	void deleteCategory( Long idCategory);
+	void deleteCategory( long idCategory);
 	
-	Category findById(Long idCategory);
+	Category findById(long idCategory);
 	
 	Category findName(String name);
 	

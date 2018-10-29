@@ -8,10 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 
@@ -27,7 +25,7 @@ public class Client implements Serializable {
 	@Id
 	@Column(name="ide_client")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long ideClient;
+	private long ideClient;
 	
 	@Column(name="name")
 	@NotEmpty(message = "Name is a required field")
@@ -73,10 +71,10 @@ public class Client implements Serializable {
 	}
 
 	//Getter and Setters
-	public Long getIdClient() {
+	public long getIdClient() {
 		return ideClient;
 	}	
-	public void setIdClient(Long idCliente) {
+	public void setIdClient(long idCliente) {
 		this.ideClient = idCliente;
 	}
 	public String getName() {

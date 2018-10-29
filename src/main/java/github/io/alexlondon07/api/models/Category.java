@@ -14,16 +14,13 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name="category")
 public class Category implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2417400044724903439L;
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name ="ide_category")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long ideCategory;
+	private long ideCategory;
 	
 	@Column(name="name")
 	@NotNull
@@ -52,11 +49,11 @@ public class Category implements Serializable{
 	}
 
 	//Getters and Setters
-	public Long getIdCategory() {
+	public long getIdCategory() {
 		return ideCategory;
 	}
 
-	public void setIdCategory(Long idCategory) {
+	public void setIdCategory(long idCategory) {
 		this.ideCategory = idCategory;
 	}
 

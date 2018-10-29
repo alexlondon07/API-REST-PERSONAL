@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import github.io.alexlondon07.api.dao.AbstractSession;
 import github.io.alexlondon07.api.models.Category;
+import github.io.alexlondon07.api.models.Client;
 
 @Repository
 @Transactional
@@ -29,8 +30,11 @@ public class CategoryDaoImpl extends AbstractSession implements CategoryDao {
 	}
 
 	@Override
-	public void deleteCategory(Long idCategory) {
-		getSession().delete(idCategory);
+	public void deleteCategory(Long id) {
+		if(id!=null && id > 0){
+			Category category = findById(id);
+			getSession().delete(category);
+		}
 	}
 
 	@Override
@@ -49,7 +53,7 @@ public class CategoryDaoImpl extends AbstractSession implements CategoryDao {
 
 	@Override
 	public List<Category> findAllCategories() {
-		return getSession().createQuery("from Category").list();
+		return getSession().createQuery("from Category Order by ide_category DESC").list();
 	}
 
 	@Override
