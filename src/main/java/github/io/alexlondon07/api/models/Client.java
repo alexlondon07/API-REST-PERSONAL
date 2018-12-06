@@ -17,9 +17,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name="clients")
 public class Client implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1682943283826480346L;
 
 	@Id
@@ -51,24 +48,33 @@ public class Client implements Serializable {
 	@Size(max=45)
 	private String city;
 	
+	@Column(name="address")
+	@NotEmpty(message = "Address is a required field")
+	@Size(max=150)
+	private String address;
+	
 	@Column(name="enable")
 	@Size(max=1)
 	private String enable;
-	
 	
 	//Constructors
 	public Client() {
 		super();
 	}
 	
-	public Client(String name, String lastName, String cellphone, String city, String enable) {
+	public Client(String name, String lastName, String identification, String cellphone, String city, String address,
+			String enable) {
 		super();
 		this.name = name;
 		this.lastName = lastName;
+		this.identification = identification;
 		this.cellphone = cellphone;
 		this.city = city;
+		this.address = address;
 		this.enable = enable;
 	}
+
+
 
 	//Getter and Setters
 	public long getIdClient() {
@@ -116,9 +122,26 @@ public class Client implements Serializable {
 		this.identification = identification;
 	}
 
+	public long getIdeClient() {
+		return ideClient;
+	}
+
+	public void setIdeClient(long ideClient) {
+		this.ideClient = ideClient;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	@Override
 	public String toString() {
-		return "Client [idClient=" + ideClient + ", name=" + name + ", lastName=" + lastName + ", identification="
-				+ identification + ", cellphone=" + cellphone + ", city=" + city + ", enable=" + enable + "]";
+		return "Client [ideClient=" + ideClient + ", name=" + name + ", lastName=" + lastName + ", identification="
+				+ identification + ", cellphone=" + cellphone + ", city=" + city + ", address=" + address + ", enable="
+				+ enable + "]";
 	}
 }
