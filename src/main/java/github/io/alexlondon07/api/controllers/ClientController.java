@@ -162,6 +162,7 @@ public class ClientController {
 			currentClient.setIdentification(client.getIdentification());
 			currentClient.setCellphone(client.getCellphone());
 			currentClient.setEnable(client.getEnable());
+			currentClient.setAddress(client.getAddress());
 			
 			clientService.updateClient(currentClient);
 			return new ResponseEntity(currentClient, HttpStatus.OK);

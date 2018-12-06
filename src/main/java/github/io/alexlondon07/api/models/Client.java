@@ -74,8 +74,6 @@ public class Client implements Serializable {
 		this.enable = enable;
 	}
 
-
-
 	//Getter and Setters
 	public long getIdClient() {
 		return ideClient;
