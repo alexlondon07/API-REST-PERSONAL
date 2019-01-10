@@ -20,9 +20,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name ="products")
 public class Product implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8157928487443214003L;
 
 	@Id
@@ -55,7 +52,7 @@ public class Product implements Serializable{
 	private String enable;
 	
 
-	@ManyToOne(optional=true, fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="ide_category")
 	private Category category;
 	
@@ -64,13 +61,16 @@ public class Product implements Serializable{
 		super();
 	}
 
-	public Product(String name, String description, String cost, String price, String enable) {
+	public Product(String name, String description, String cost, String price, String image, String enable,
+			Category category) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.cost = cost;
 		this.price = price;
+		this.image = image;
 		this.enable = enable;
+		this.category = category;
 	}
 
 	//Getters and Setters	

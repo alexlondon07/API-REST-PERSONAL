@@ -29,8 +29,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
-
+import github.io.alexlondon07.api.models.Category;
 import github.io.alexlondon07.api.models.Product;
+import github.io.alexlondon07.api.services.category.CategoryService;
 import github.io.alexlondon07.api.services.product.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,6 +51,9 @@ public class ProductController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	CategoryService categoryService;
 	
 	public static final String PRODUCT_UPLOADED_FOLDER ="images/products/";
 	
@@ -112,6 +116,19 @@ public class ProductController {
 						new CustomErrorType("Unable to Create. A Product with name " 
 								+ product.getName() + " already exist." 
 								, MessageType.INFO ),HttpStatus.CONFLICT);
+			}
+			
+			if(product.getCategory().getIdeCategory() <= 0 || product.getCategory().equals(null) ) {
+				return new ResponseEntity(
+						new CustomErrorType("Unable to Create. Category is required  "
+								, MessageType.INFO ),HttpStatus.CONFLICT);
+			}else {
+				Category category = categoryService.findById(product.getCategory().getIdeCategory());
+				if(category == null){
+					return new ResponseEntity(
+							new CustomErrorType("Unable to Create. Category with id " + product.getCategory().getIdeCategory() + " not found ", MessageType.INFO ),
+							HttpStatus.NOT_FOUND);
+				}
 			}
 			
 			//Create Product

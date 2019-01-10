@@ -110,7 +110,7 @@ public class CategoryController {
 			//Create Category
 			categoryService.saveCategory(category);	
 			HttpHeaders headers = new HttpHeaders();
-			headers.setLocation(uriBuilder.path(Constants.API_VERSION+ Constants.CATEGORIES + "{id}").buildAndExpand(category.getIdCategory()).toUri());		
+			headers.setLocation(uriBuilder.path(Constants.API_VERSION+ Constants.CATEGORIES + "{id}").buildAndExpand(category.getIdeCategory()).toUri());		
 			return new ResponseEntity(category, headers, HttpStatus.CREATED);
         }
 	}
@@ -133,7 +133,7 @@ public class CategoryController {
 			return new ResponseEntity(new CustomErrorType(bindingResult.getAllErrors().toString(), MessageType.ERROR),HttpStatus.BAD_REQUEST);
 		} else {
 			
-			category.setIdCategory(id);	
+			category.setIdeCategory(id);	
 			
 			//Validate if Category already exist.
 			if(categoryService.isCategoryExist(category)){

@@ -62,7 +62,7 @@ public class CategoryDaoImpl extends AbstractSession implements CategoryDao {
 		Category categoryResponse = findName(category.getName());
 		boolean vBalid = false;
 		if(categoryResponse !=null) {
-			if(category.getIdCategory() != categoryResponse.getIdCategory()) {
+			if(category.getIdeCategory() != categoryResponse.getIdeCategory()) {
 				vBalid =  true;	
 			}
 		}

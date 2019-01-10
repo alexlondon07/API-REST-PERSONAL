@@ -49,11 +49,11 @@ public class Category implements Serializable{
 	}
 
 	//Getters and Setters
-	public long getIdCategory() {
+	public long getIdeCategory() {
 		return ideCategory;
 	}
 
-	public void setIdCategory(long idCategory) {
+	public void setIdeCategory(long idCategory) {
 		this.ideCategory = idCategory;
 	}
 

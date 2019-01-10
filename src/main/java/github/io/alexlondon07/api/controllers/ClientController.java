@@ -162,6 +162,7 @@ public class ClientController {
 			currentClient.setIdentification(client.getIdentification());
 			currentClient.setCellphone(client.getCellphone());
 			currentClient.setEnable(client.getEnable());
+			currentClient.setCity(client.getCity());
 			currentClient.setAddress(client.getAddress());
 			
 			clientService.updateClient(currentClient);
