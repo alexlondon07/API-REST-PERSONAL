@@ -104,8 +104,8 @@ public class ProductController {
 	@RequestMapping(value="/products", method = RequestMethod.POST, headers = Constants.JSON)
 	public ResponseEntity<Product> createProduct(@Validated @RequestBody Product product, UriComponentsBuilder uriBuilder, BindingResult bindingResult){
 		
-		logger.info("Creating Product : {}", product.getName());
-	        
+		logger.info("Creating Product : {}", product.toString());
+
 		if (bindingResult.hasErrors()) {
 			return new ResponseEntity(new CustomErrorType(bindingResult.getAllErrors().toString(), MessageType.ERROR),HttpStatus.BAD_REQUEST);
 		} else {
@@ -118,7 +118,7 @@ public class ProductController {
 								, MessageType.INFO ),HttpStatus.CONFLICT);
 			}
 			
-			if(product.getCategory().getIdeCategory() <= 0 || product.getCategory().equals(null) ) {
+			if( product.getCategory().getIdeCategory() <= 0 ) {
 				return new ResponseEntity(
 						new CustomErrorType("Unable to Create. Category is required  "
 								, MessageType.INFO ),HttpStatus.CONFLICT);

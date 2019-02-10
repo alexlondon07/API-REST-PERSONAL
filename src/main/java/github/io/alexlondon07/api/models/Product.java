@@ -25,7 +25,7 @@ public class Product implements Serializable{
 	@Id
 	@Column(name="ide_product")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long ideProduct;
+	private long ideProduct;
 	
 	@Column(name="name")
 	@NotEmpty(message = "Name is a required field")
@@ -82,11 +82,11 @@ public class Product implements Serializable{
 		this.image = image;
 	}
 	
-	public Long getIdeProduct() {
+	public long getIdeProduct() {
 		return ideProduct;
 	}
 
-	public void setIdeProduct(Long ideProduct) {
+	public void setIdeProduct(long ideProduct) {
 		this.ideProduct = ideProduct;
 	}
 
