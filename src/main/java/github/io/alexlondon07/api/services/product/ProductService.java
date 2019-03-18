@@ -10,13 +10,13 @@ public interface ProductService {
 	
 	void updateProduct(Product product);
 	
-	void deleteProduct(Long id);
+	void deleteProduct(long id);
 	
-	Product findById(Long id);
+	Product findById(long id);
 	
 	Product findByName(String name);
 	
-	List<Product> findByIdCategory(Long id);
+	List<Product> findByIdCategory(long id);
 	
 	List<Product> findAllProducts();
 	

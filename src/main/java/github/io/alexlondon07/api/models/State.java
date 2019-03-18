@@ -16,6 +16,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name ="states")
 public class State implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="ide_state")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -28,12 +28,12 @@ public class ProductServiceImp implements ProductService {
 	}
 
 	@Override
-	public void deleteProduct(Long id) {
+	public void deleteProduct(long id) {
 		productDao.deleteProduct(id);
 	}
 
 	@Override
-	public Product findById(Long id) {
+	public Product findById(long id) {
 		return productDao.findById(id);
 	}
 
@@ -43,7 +43,7 @@ public class ProductServiceImp implements ProductService {
 	}
 
 	@Override
-	public List<Product> findByIdCategory(Long id) {
+	public List<Product> findByIdCategory(long id) {
 		return productDao.findByIdCategory(id);
 	}
 

@@ -47,7 +47,6 @@ public class ProductController {
 
 	//Variables Globales
 	public static final Logger logger =  LoggerFactory.getLogger(ProductController.class);
-	private CustomErrorType customErrorType;
 	
 	@Autowired
 	ProductService productService;
@@ -126,7 +125,7 @@ public class ProductController {
 				Category category = categoryService.findById(product.getCategory().getIdeCategory());
 				if(category == null){
 					return new ResponseEntity(
-							new CustomErrorType("Unable to Create. Category with id " + product.getCategory().getIdeCategory() + " not found ", MessageType.INFO ),
+							new CustomErrorType("Category with id " + product.getCategory().getIdeCategory() + " not found ", MessageType.INFO ),
 							HttpStatus.NOT_FOUND);
 				}
 			}
@@ -270,42 +269,63 @@ public class ProductController {
 	@RequestMapping(value="/product/{id}", method = RequestMethod.PATCH, headers = Constants.JSON)
 	public ResponseEntity<Product> updateUpdate(@Validated @PathVariable("id") Long id, @RequestBody Product product, BindingResult bindingResult) {
 		
-		logger.info("Updating Product id {} ", id);
+		try {
+			
+			logger.info("Updating Product {} ", product.toString());
+			
+			if(id == null || id <= 0) {
+				return new ResponseEntity(new CustomErrorType("idProduct is required", MessageType.ERROR), HttpStatus.CONFLICT);
+			}
 		
-		if(id == null || id <= 0) {
-			return new ResponseEntity(new CustomErrorType("idProduct is required", MessageType.ERROR), HttpStatus.CONFLICT);
-		}
-	
-		if (bindingResult.hasErrors()) {
-			return new ResponseEntity(new CustomErrorType(bindingResult.getAllErrors().toString(), MessageType.ERROR),HttpStatus.BAD_REQUEST);
-		} else {
-			
-			product.setIdeProduct(id);	
-			
-			//Validate if Product exist in the database
-			if(productService.isProductExist(product)){
-				return new ResponseEntity(
-						new CustomErrorType("Unable to Create. A Product with name " 
-								+ product.getName() + " already exist." 
-								, MessageType.INFO ),HttpStatus.CONFLICT);
+			if (bindingResult.hasErrors()) {
+				return new ResponseEntity(new CustomErrorType(bindingResult.getAllErrors().toString(), MessageType.ERROR),HttpStatus.BAD_REQUEST);
+			} else {
+				
+				product.setIdeProduct(id);	
+				
+				//Validate if Product exist in the database
+				if(productService.isProductExist(product)){
+					return new ResponseEntity(
+							new CustomErrorType("Unable to Update. A Product with name " 
+									+ product.getName() + " already exist." 
+									, MessageType.INFO ),HttpStatus.CONFLICT);
+				}
+				
+				Product currentProduct = productService.findById(id);
+				if(currentProduct == null ){
+					return new ResponseEntity(
+							new CustomErrorType("Unable to update. A Product with id " + id + " not found.", MessageType.INFO ),
+							HttpStatus.CONFLICT);
+				}
+				
+				if( product.getCategory().getIdeCategory() <= 0 ) {
+					return new ResponseEntity(
+							new CustomErrorType("Unable to Create. Category is required  "
+									, MessageType.INFO ),HttpStatus.CONFLICT);
+				}else {
+					Category category = categoryService.findById(product.getCategory().getIdeCategory());
+					if(category == null){
+						return new ResponseEntity(
+								new CustomErrorType("Category with id " + product.getCategory().getIdeCategory() + " not found ", MessageType.INFO ),
+								HttpStatus.NOT_FOUND);
+					}
+				}
+				
+				currentProduct.setName(product.getName());
+				currentProduct.setDescription(product.getDescription());
+				currentProduct.setCost(product.getCost());
+				currentProduct.setPrice(product.getPrice());
+				currentProduct.setEnable(product.getEnable());
+				currentProduct.setCategory(product.getCategory());
+				
+				productService.updateProduct(currentProduct);
+				return new ResponseEntity(currentProduct, HttpStatus.OK);
 			}
 			
-			Product currentProduct = productService.findById(id);
-			if(currentProduct == null ){
-				return new ResponseEntity(
-						new CustomErrorType("Unable to update. A Product with id " + id + " not found.", MessageType.INFO ),
-						HttpStatus.CONFLICT);
-			}
-			currentProduct.setName(product.getName());
-			currentProduct.setDescription(product.getDescription());
-			currentProduct.setCost(product.getCost());
-			currentProduct.setPrice(product.getPrice());
-			currentProduct.setEnable(product.getEnable());
-			currentProduct.setCategory(product.getCategory());
-			
-			productService.updateProduct(currentProduct);
-			return new ResponseEntity(currentProduct, HttpStatus.OK);
-		}
+		} catch (Exception e) {
+			logger.error("Updating Product {} ", e.getMessage());
+			return new ResponseEntity(new CustomErrorType("Has been error, please try more later", MessageType.ERROR), HttpStatus.CONFLICT);
+		}	
 	}
 	
 	// ------------------- DELETE Product----------------------------------------------------------------------------------

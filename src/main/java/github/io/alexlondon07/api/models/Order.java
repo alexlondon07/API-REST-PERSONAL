@@ -21,6 +21,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name ="orders")
 public class Order implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="ide_order")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
