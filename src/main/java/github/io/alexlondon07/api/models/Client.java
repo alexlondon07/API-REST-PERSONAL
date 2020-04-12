@@ -12,56 +12,55 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-
 @Entity
-@Table(name="clients")
+@Table(name = "clients")
 public class Client implements Serializable {
-	
+
 	private static final long serialVersionUID = 1682943283826480346L;
 
 	@Id
-	@Column(name="ide_client")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "ide_client")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long ideClient;
-	
-	@Column(name="name")
+
+	@Column(name = "name")
 	@NotEmpty(message = "Name is a required field")
-	@Size(max=90)
+	@Size(max = 90)
 	private String name;
-	
-	@Column(name="last_name")
+
+	@Column(name = "last_name")
 	@NotEmpty(message = "Last name is a required field")
-	@Size(max=90)
+	@Size(max = 90)
 	private String lastName;
-	
-	@Column(name="identification")
-	@Size(max=10)
+
+	@Column(name = "identification")
+	@Size(max = 10)
 	private String identification;
-	
-	@Column(name="cellphone")
+
+	@Column(name = "cellphone")
 	@NotEmpty(message = "Cellphone is a required field")
-	@Size(max=10)
+	@Size(max = 10)
 	private String cellphone;
-	
-	@Column(name="city")
+
+	@Column(name = "city")
 	@NotEmpty(message = "City is a required field")
-	@Size(max=45)
+	@Size(max = 45)
 	private String city;
-	
-	@Column(name="address")
+
+	@Column(name = "address")
 	@NotEmpty(message = "Address is a required field")
-	@Size(max=150)
+	@Size(max = 150)
 	private String address;
-	
-	@Column(name="enable")
-	@Size(max=1)
+
+	@Column(name = "enable")
+	@Size(max = 1)
 	private String enable;
-	
-	//Constructors
+
+	// Constructors
 	public Client() {
 		super();
 	}
-	
+
 	public Client(String name, String lastName, String identification, String cellphone, String city, String address,
 			String enable) {
 		super();
@@ -74,54 +73,61 @@ public class Client implements Serializable {
 		this.enable = enable;
 	}
 
-	//Getter and Setters
+	// Getter and Setters
 	public long getIdClient() {
 		return ideClient;
-	}	
+	}
+
 	public void setIdClient(long idCliente) {
 		this.ideClient = idCliente;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
 	public String getCellphone() {
 		return cellphone;
 	}
+
 	public void setCellphone(String cellphone) {
 		this.cellphone = cellphone;
 	}
+
 	public String getCity() {
 		return city;
 	}
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
 	public String getEnable() {
 		return enable;
 	}
+
 	public void setEnable(String enable) {
 		this.enable = enable;
 	}
-	
+
 	public String getIdentification() {
 		return identification;
 	}
 
 	public void setIdentification(String identification) {
 		this.identification = identification;
-	}
-
-	public long getIdeClient() {
-		return ideClient;
 	}
 
 	public void setIdeClient(long ideClient) {

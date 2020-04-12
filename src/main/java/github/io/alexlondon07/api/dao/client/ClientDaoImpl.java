@@ -28,8 +28,8 @@ public class ClientDaoImpl extends AbstractSession implements ClientDao {
 
 	@Override
 	public void deleteClient(Long id) {
-		
-		if(id!=null && id > 0){
+
+		if (id != null && id > 0) {
 			Client client = findById(id);
 			getSession().delete(client);
 		}
@@ -42,10 +42,8 @@ public class ClientDaoImpl extends AbstractSession implements ClientDao {
 
 	@Override
 	public Client findByCellphone(String number) {
-		return (Client) getSession().createQuery(
-			"from Client where cellphone = :cellphone")
-		.setParameter("cellphone", number)
-		.uniqueResult();
+		return (Client) getSession().createQuery("from Client where cellphone = :cellphone")
+				.setParameter("cellphone", number).uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -56,13 +54,12 @@ public class ClientDaoImpl extends AbstractSession implements ClientDao {
 
 	@Override
 	public boolean isClientExist(Client client) {
+
 		Client clientResponse = findByCellphone(client.getCellphone());
+
 		boolean vBalid = false;
-	
-		if(clientResponse !=null){	
-			if(client.getIdClient() != clientResponse.getIdClient()){
-				vBalid =  true;	
-			}
+		if (clientResponse != null) {
+			vBalid = client.getIdClient() != clientResponse.getIdClient() ? true : false;
 		}
 		return vBalid;
 	}

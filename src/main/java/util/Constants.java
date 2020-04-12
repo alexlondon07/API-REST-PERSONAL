@@ -19,6 +19,8 @@ public class Constants {
 	//Products
 	public static final String PRODUCTS = "products/";
 	
+	//States
+	public static final String STATES = "states/";
 	
 	//Controllers
 }
