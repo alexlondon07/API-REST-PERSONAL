@@ -42,6 +42,21 @@ public class DataBaseConfiguration {
 		 * dataSource.setUsername("b84d09cf56eb8a"); dataSource.setPassword("9c894417");
 		 */
 
+		// LOCAL
+		/*
+		 * dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		 * dataSource.setUrl("jdbc:mysql://localhost:3306/api_accounting");
+		 * dataSource.setUsername("api_accounting");
+		 * dataSource.setPassword("api_accounting");
+		 */
+
+		// HEROKU
+		/*
+		 * dataSource.setDriverClassName("com.mysql.jdbc.Driver"); dataSource.setUrl(
+		 * "jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_546bda58cab430c");
+		 * dataSource.setUsername("b84d09cf56eb8a"); dataSource.setPassword("9c894417");
+		 */
+
 		return dataSource;
 	}
 
