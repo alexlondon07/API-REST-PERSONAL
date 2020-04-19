@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,7 +92,7 @@ public class ClientController {
 
 		if (bindingResult.hasErrors()) {
 
-			// List<String> message = CustomResponse.processValidationError(bindingResult);
+			@SuppressWarnings("unchecked")
 			List<String> message = (List<String>) CustomResponse.getFielErrorResponse(bindingResult);
 			return new CustomResponse<>(Boolean.FALSE, message.toString(), 409);
 
@@ -106,6 +109,77 @@ public class ClientController {
 		}
 		return new CustomResponse<>(Boolean.TRUE, "success", 200, client);
 
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@ApiOperation("Update client with specific id")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Client.class) })
+	@PatchMapping(value = "/client/{id}", headers = Constants.JSON)
+	public CustomResponse<Client> updateClient(@Validated @PathVariable("id") Long id, @RequestBody Client client,
+			BindingResult bindingResult) {
+
+		logger.info("Updating Client id {} ", id);
+
+		if (id == null || id <= 0) {
+			return new CustomResponse<>(Boolean.FALSE, "Ide Client is required", 409);
+		}
+
+		if (bindingResult.hasErrors()) {
+
+			@SuppressWarnings("unchecked")
+			List<String> message = (List<String>) CustomResponse.getFielErrorResponse(bindingResult);
+			return new CustomResponse<>(Boolean.FALSE, message.toString(), 409);
+
+		} else {
+
+			client.setIdClient(id);
+
+			// Validate if Client exist in the database
+			if (clientService.isClientExist(client)) {
+				return new CustomResponse<>(Boolean.FALSE,
+						"Unable to update. A Client with cellphone \" + client.getCellphone() + \" already exist. ",
+						409);
+			}
+
+			Client currentClient = clientService.findById(id);
+			if (currentClient == null) {
+				return new CustomResponse<>(Boolean.FALSE, "Unable to update. A Client with id \" + id + \" not found.",
+						409);
+			}
+			currentClient.setName(client.getName());
+			currentClient.setLastName(client.getLastName());
+			currentClient.setIdentification(client.getIdentification());
+			currentClient.setCellphone(client.getCellphone());
+			currentClient.setEnable(client.getEnable());
+			currentClient.setCity(client.getCity());
+			currentClient.setAddress(client.getAddress());
+
+			clientService.updateClient(currentClient);
+			return new CustomResponse<>(Boolean.TRUE, "success", 200, currentClient);
+
+		}
+
+	}
+
+	@ApiOperation("Delete client with specific id")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Client.class) })
+	@DeleteMapping(value = "/client/{id}")
+	public CustomResponse<?> deleteClient(@PathVariable("id") Long id) {
+
+		logger.info("fetching % Deleting Client with id {} ", id);
+
+		if (id == null || id <= 0) {
+			return new CustomResponse<>(Boolean.FALSE, "Ide client is required", 409);
+		}
+
+		Client client = clientService.findById(id);
+
+		if (client == null) {
+			return new CustomResponse<>(Boolean.FALSE, "Unable to delete. Client with id \" + id + \" not found.", 404);
+		}
+
+		clientService.deleteClient(id);
+		return new CustomResponse<>(Boolean.TRUE, "success", 200, id);
 	}
 
 }
