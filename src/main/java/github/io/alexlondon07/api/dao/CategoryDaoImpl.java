@@ -1,4 +1,4 @@
-package github.io.alexlondon07.api.dao.category;
+package github.io.alexlondon07.api.dao;
 
 
 import java.util.List;
@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
-import github.io.alexlondon07.api.dao.AbstractSession;
 import github.io.alexlondon07.api.models.Category;
 import github.io.alexlondon07.api.models.Client;
 

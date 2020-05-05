@@ -1,4 +1,4 @@
-package github.io.alexlondon07.api.dao.client;
+package github.io.alexlondon07.api.dao;
 
 import java.util.List;
 

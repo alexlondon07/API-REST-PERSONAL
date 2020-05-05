@@ -1,4 +1,4 @@
-package github.io.alexlondon07.api.config;
+package github.io.alexlondon07.api.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

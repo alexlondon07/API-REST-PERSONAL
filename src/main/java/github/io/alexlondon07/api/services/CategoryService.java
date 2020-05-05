@@ -1,18 +1,18 @@
-package github.io.alexlondon07.api.dao.category;
+package github.io.alexlondon07.api.services;
 
 import java.util.List;
 
 import github.io.alexlondon07.api.models.Category;
 
-public interface CategoryDao {
+public interface CategoryService {
 
 	void saveCategory(Category category);
 	
 	void updateCategory(Category category);
 	
-	void deleteCategory( Long idCategory);
+	void deleteCategory( long idCategory);
 	
-	Category findById(Long idCategory);
+	Category findById(long idCategory);
 	
 	Category findName(String name);
 	

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import github.io.alexlondon07.api.models.Client;
-import github.io.alexlondon07.api.services.client.ClientService;
+import github.io.alexlondon07.api.services.ClientService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

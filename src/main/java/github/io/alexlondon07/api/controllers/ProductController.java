@@ -31,8 +31,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import github.io.alexlondon07.api.models.Category;
 import github.io.alexlondon07.api.models.Product;
-import github.io.alexlondon07.api.services.category.CategoryService;
-import github.io.alexlondon07.api.services.product.ProductService;
+import github.io.alexlondon07.api.services.CategoryService;
+import github.io.alexlondon07.api.services.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

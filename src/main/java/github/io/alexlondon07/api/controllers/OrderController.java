@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import github.io.alexlondon07.api.models.Order;
-import github.io.alexlondon07.api.services.order.OrderService;
+import github.io.alexlondon07.api.services.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

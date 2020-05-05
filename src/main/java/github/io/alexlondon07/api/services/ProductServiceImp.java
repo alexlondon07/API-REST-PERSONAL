@@ -1,4 +1,4 @@
-package github.io.alexlondon07.api.services.product;
+package github.io.alexlondon07.api.services;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import github.io.alexlondon07.api.dao.product.ProductDao;
+import github.io.alexlondon07.api.dao.ProductDao;
 import github.io.alexlondon07.api.models.Product;
 
 @Service("productService")

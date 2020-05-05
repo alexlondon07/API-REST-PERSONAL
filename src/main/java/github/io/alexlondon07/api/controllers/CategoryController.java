@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import github.io.alexlondon07.api.models.Category;
-import github.io.alexlondon07.api.services.category.CategoryService;
+import github.io.alexlondon07.api.services.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

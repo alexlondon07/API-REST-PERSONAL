@@ -1,5 +1,5 @@
 
-package github.io.alexlondon07.api.services.client;
+package github.io.alexlondon07.api.services;
 
 import java.util.List;
 

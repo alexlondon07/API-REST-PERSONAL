@@ -1,11 +1,12 @@
-package github.io.alexlondon07.api.dao.order;
+package github.io.alexlondon07.api.services;
 
 import java.util.List;
 
 import github.io.alexlondon07.api.models.Order;
 
-public interface OrderDao {
-	void saveOrder( Order order);
+public interface OrderService {
+	
+void saveOrder( Order order);
 	
 	void updateOrder ( Order order );
 	
@@ -16,4 +17,5 @@ public interface OrderDao {
 	List<Order> findAllOrders();
 	
 	List<Order> findByIdeClient(Long id);
+
 }

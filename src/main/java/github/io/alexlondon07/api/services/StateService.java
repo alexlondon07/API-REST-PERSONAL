@@ -1,13 +1,10 @@
-/**
- * 
- */
-package github.io.alexlondon07.api.dao.state;
+package github.io.alexlondon07.api.services;
 
 import java.util.List;
 
 import github.io.alexlondon07.api.models.State;
 
-public interface StateDao {
+public interface StateService {
 	void saveState(State state);
 	void updateState(State state);
 	void deleteState(Long id);

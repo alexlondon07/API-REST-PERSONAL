@@ -1,4 +1,4 @@
-package github.io.alexlondon07.api.services.state;
+package github.io.alexlondon07.api.services;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import github.io.alexlondon07.api.dao.state.StateDao;
+import github.io.alexlondon07.api.dao.StateDao;
 import github.io.alexlondon07.api.models.State;
 
 @Service("stateService")
