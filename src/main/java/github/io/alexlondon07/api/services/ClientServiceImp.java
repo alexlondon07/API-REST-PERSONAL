@@ -1,6 +1,5 @@
 package github.io.alexlondon07.api.services;
 
-
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -17,7 +16,7 @@ public class ClientServiceImp implements ClientService {
 
 	@Autowired
 	private ClientDao clienteDao;
-	
+
 	@Override
 	public void saveClient(Client client) {
 		clienteDao.saveClient(client);
