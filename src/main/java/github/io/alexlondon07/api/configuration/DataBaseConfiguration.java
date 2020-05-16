@@ -31,9 +31,9 @@ public class DataBaseConfiguration {
 
 		// LOCAL
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/api_accounting");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/TVSHOWS");
 		dataSource.setUsername("root");
-		dataSource.setPassword("");
+		dataSource.setPassword("23camilo*");
 
 		// HEROKU
 		/*
