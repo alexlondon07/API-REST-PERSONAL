@@ -7,12 +7,16 @@
                         <div>
                             <img class="img" src="{{ show.show.image?.medium }}" />
                         </div>
-                        <p class="card-category">{{ show.show.type }}</p>
+                        <span>Genres:</span>
+                        <div *ngFor="let genre of show.show?.genres">
+                            <p class="card-category">{{ genre }}</p>
+                        </div>
                         <h3 class="card-title">{{ show.show.name }}</h3>
                     </div>
                     <div class="card-footer">
+                        <span>Premiered</span>
                         <div class="stats">
-                            <i class="material-icons">date_range</i> Last 24 Hours
+                            <i class="material-icons">date_range</i>{{ show.show.premiered }}
                         </div>
                     </div>
                 </div>
