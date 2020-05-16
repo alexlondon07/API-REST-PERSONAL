@@ -21,20 +21,18 @@ public class UserDaoImpl extends AbstractSession implements UserDao {
 	@Override
 	public void deleteUser(String userName) {
 		if (userName != null && !userName.isEmpty()) {
-			//getSession().delete(client);
+			Users user = findByUserName(userName);
+			getSession().delete(user);
 		}
 
 	}
 
 	@Override
-	public Client findByUserNameAndPwd(String userName, String pwd) {
-		return (Client) getSession().createQuery("from USERS where user = :user and pwd = :pwd ")
-				.setParameter("cellphone", userName).
-				setParameter("pwd", pwd).uniqueResult();
-		
+	public Users findByUserNameAndPwd(String userName, String pwd) {
+		return (Users) getSession().createQuery("from USERS where user = :user and pwd = :pwd ")
+				.setParameter("user", userName).setParameter("pwd", pwd).uniqueResult();
+
 	}
-	
-	
 
 	@Override
 	public List<Users> findAllUser() {
@@ -43,8 +41,18 @@ public class UserDaoImpl extends AbstractSession implements UserDao {
 
 	@Override
 	public boolean isClientExist(Users user) {
-		// TODO Auto-generated method stub
-		return false;
+		Users userResponse = findByUserName(user.getUser());
+
+		boolean vBalid = false;
+		if (userResponse != null) {
+			vBalid = user.getUser() != userResponse.getUser() ? true : false;
+		}
+		return vBalid;
 	}
 
+	@Override
+	public Users findByUserName(String username) {
+		return (Users) getSession().createQuery("from USERS where user = :user").setParameter("user", username)
+				.uniqueResult();
+	}
 }
