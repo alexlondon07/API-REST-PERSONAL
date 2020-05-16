@@ -2,9 +2,15 @@ package github.io.alexlondon07.api.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Repository;
+
 import github.io.alexlondon07.api.models.Client;
 import github.io.alexlondon07.api.models.Users;
 
+@Repository
+@Transactional
 public class UserDaoImpl extends AbstractSession implements UserDao {
 
 	@Override
