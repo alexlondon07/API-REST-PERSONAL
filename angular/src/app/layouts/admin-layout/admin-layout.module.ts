@@ -24,6 +24,7 @@ import {
 import { ClientService } from 'app/services/client-service.service';
 import { ClientAddComponent } from 'app/client-add/client-add.component';
 import { ClientsComponent } from 'app/clients/clients.component';
+import { ShowsComponent } from '../../shows/shows.component';
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { ClientsComponent } from 'app/clients/clients.component';
     NotificationsComponent,
     UpgradeComponent,
     ClientsComponent,
-    ClientAddComponent
+    ClientAddComponent,
+    ShowsComponent
   ],
   providers: [ClientService],
 })
