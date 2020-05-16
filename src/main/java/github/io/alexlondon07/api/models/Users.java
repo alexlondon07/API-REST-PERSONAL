@@ -1,6 +1,7 @@
 package github.io.alexlondon07.api.models;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -17,6 +18,9 @@ public class Users implements Serializable{
 	private String nombre;
 	private String user;
 	private String pwd;
+	private Date dateCreate;
+	private String role;
+	private int status;
 	public int getId() {
 		return id;
 	}

@@ -23,8 +23,8 @@ import util.CustomResponse;
 
 @Controller
 @RequestMapping(Constants.API_VERSION)
-@Api(value = "UsuariosController", produces = MediaType.APPLICATION_JSON_VALUE)
-public class UsuariosController {
+@Api(value = "UsersController", produces = MediaType.APPLICATION_JSON_VALUE)
+public class UsersController {
 	
 	@ApiOperation("Permite crear usuarios")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "OK", response = Client.class) })
