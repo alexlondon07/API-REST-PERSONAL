@@ -2,16 +2,20 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6" *ngFor="let show of shows">
-                <div class="card card-stats">
-                    <div class="card-header card-header-success card-header-icon">
-                        <div>
+
+                <div class="card card-profile">
+                    <div class="">
+                        <a href="#pablo">
                             <img class="img" src="{{ show.show.image?.medium }}" />
-                        </div>
-                        <span>Genres:</span>
-                        <div *ngFor="let genre of show.show?.genres">
-                            <p class="card-category">{{ genre }}</p>
-                        </div>
-                        <h3 class="card-title">{{ show.show.name }}</h3>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-category text-gray">Language: {{ show.show.premiered }}</h6>
+                        <h4 class="card-title">{{ show.show.name }}</h4>
+                        <!-- <p class="card-description">
+                            Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                        </p>
+                        <a href="#pablo" class="btn btn-danger btn-round">Follow</a> -->
                     </div>
                     <div class="card-footer">
                         <span>Premiered</span>
