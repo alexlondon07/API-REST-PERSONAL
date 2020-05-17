@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ShowsService } from '../services/shows.service';
+import { ShowsService } from '../../services/shows.service';
 
 @Component({
   selector: "app-shows",
@@ -17,7 +17,6 @@ export class ShowsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ShowsComponent loaded");
     this.getData();
   }
 
@@ -29,7 +28,6 @@ export class ShowsComponent implements OnInit {
       (data) => {
         if (data) {
           this.shows = data;
-          console.log("Component getData: ", this.shows);
         }
       },
       (error) => {

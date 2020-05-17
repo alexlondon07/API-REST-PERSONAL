@@ -12,7 +12,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 //Clients Components 
 import { ClientsComponent } from 'app/clients/clients.component';
 import { ClientAddComponent } from 'app/client-add/client-add.component';
-import { ShowsComponent } from '../../shows/shows.component';
+import { ShowsComponent } from '../../shows/list/shows.component';
+import { ShowDetailComponent } from '../../shows/show-detail/show-detail.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -60,6 +61,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'client',         component: ClientsComponent },
     { path: 'client-add',     component: ClientAddComponent },
     { path: 'shows',          component: ShowsComponent },
+    { path: 'shows/:id',      component: ShowDetailComponent },
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'table-list',     component: TableListComponent },
