@@ -28,7 +28,4 @@ export class ShowsService {
    */
   getShowById(id: number): Observable<any> {
     return this._http.get(this.url + "/shows/"+id);
-
-    
-    http://api.tvmaze.com/shows/1
 }

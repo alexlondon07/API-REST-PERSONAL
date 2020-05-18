@@ -9,7 +9,7 @@ import { ShowsService } from '../../services/shows.service';
 export class ShowDetailComponent implements OnInit, OnDestroy {
   id: number;
   public show: any = {};
-  public rating: number = 3;
+  public rating: number = 10;
   public starCount: number = 5;
   public ratingArr = [];
 

@@ -5,7 +5,6 @@
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <h4 class="card-title">Show Detatil # {{ show.id }}</h4>
-                        <p class="card-category">Language: {{ show.language }}</p>
                     </div>
                     <div class="card-body">
                         <div class="col-md-12">
@@ -31,13 +30,14 @@
                 <div class="card">
                     <div class="card-header card-header-info">
                         <h4 class="card-title">Show Info</h4>
-                        <p class="card-category">Language: {{ show.language }}</p>
                     </div>
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="card card-profile">
                                 <div class="card-body">
+                                    <h6 class="card-category text-gray">Network: {{ show.network?.name }} {{ show.network?.country.name }}</h6>
                                     <h6 class="card-category text-gray">Type: {{ show.type }}</h6>
+                                    <h6 class="card-category text-gray">Language: {{ show.language }}</h6>
                                     <h6 class="card-category text-gray">Status: {{ show.status }}</h6>
                                     <h6 class="card-category text-gray">Runtime: {{ show.runtime }}</h6>
                                     <h6 class="card-category text-gray">Schedule Days: {{ show.schedule?.days }}</h6>
@@ -53,9 +53,6 @@
                                     <mat-error *ngIf="starCount == null || starCount == 0">
                                         Star count is <strong>required</strong> and cannot be zero
                                     </mat-error>
-                                    <p class="body-2">
-                                        Your rated <span class="body-2">{{rating}}</span> / <span class="body-2">{{starCount}}</span>
-                                    </p>
                                     <h6 class="card-category text-gray">Genres
                                         <div *ngFor="let genre of show.genres">
                                             {{ genre }}
