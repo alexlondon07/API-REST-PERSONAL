@@ -18,8 +18,9 @@ import {
   MatRippleModule,
   MatFormFieldModule,
   MatTooltipModule,
-  MatSelectModule
-} from '@angular/material';
+  MatSelectModule,
+  MatIconModule,
+} from "@angular/material";
 
 import { ClientService } from 'app/services/client-service.service';
 import { ClientAddComponent } from 'app/client-add/client-add.component';
@@ -38,6 +39,7 @@ import { ShowDetailComponent } from '../../shows/show-detail/show-detail.compone
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    MatIconModule,
   ],
   declarations: [
     DashboardComponent,
@@ -51,9 +53,8 @@ import { ShowDetailComponent } from '../../shows/show-detail/show-detail.compone
     ClientsComponent,
     ClientAddComponent,
     ShowsComponent,
-    ShowDetailComponent
+    ShowDetailComponent,
   ],
   providers: [ClientService],
 })
-
 export class AdminLayoutModule {}

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input, Output } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
 import { ShowsService } from '../../services/shows.service';
 
@@ -8,8 +8,10 @@ import { ShowsService } from '../../services/shows.service';
 })
 export class ShowDetailComponent implements OnInit, OnDestroy {
   id: number;
-  private sub: any;
   public show: any = {};
+  public rating: number = 3;
+  public starCount: number = 5;
+  public ratingArr = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -18,21 +20,30 @@ export class ShowDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-        this.id = +params["id"];
-        this._showService.getShowById(this.id).subscribe(
-          (data) => {
-            if (data) {
-              this.show = data;
+      this.id = +params["id"];
+      this._showService.getShowById(this.id).subscribe(
+        (data) => {
+          if (data) {
+            this.show = data;
+            for (let index = 0; index < this.show.rating.average; index++) {
+              this.ratingArr.push(index);
             }
-          },
-          (error) => {
-            console.log(<any>error);
           }
-        );
+        },
+        (error) => {
+          console.log(<any>error);
+        }
+      );
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy() {}
 
+  showIcon(index: number) {
+    if (this.rating >= index + 1) {
+      return "star";
+    } else {
+      return "star_border";
+    }
   }
 }
