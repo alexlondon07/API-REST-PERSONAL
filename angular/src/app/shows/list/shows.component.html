@@ -1,16 +1,53 @@
 <div class="main-content">
     <div class="container-fluid">
+        <form class="navbar-form">
+            <div class="input-group no-border">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <select class="custom-select custom-select-sm">
+                            <option selected>Language</option>
+                            <option *ngFor="let option of languages" [value]="option">{{ option }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <select class="custom-select custom-select-sm">
+                            <option selected>Genres</option>
+                            <option *ngFor="let option of genres" [value]="option">{{ option }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <select class="custom-select custom-select-sm">
+                            <option selected>Channels</option>
+                            <option *ngFor="let option of languages" [value]="option">{{ option }}</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button mat-raised-button type="submit" class="btn btn-white
+                    btn-round btn-just-icon">
+                    <i class="material-icons">search</i>
+                    <div class="ripple-container"></div>
+                </button>
+            </div>
+        </form>
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6" *ngFor="let show of shows">
                 <a href="#" [routerLink]="['/shows', show.show.id]">
                     <div class="card card-profile">
                         <div class="">
                             <a href="#">
-                                <img class="img" src="{{ show.show.image?.medium }}" />
+                                <img class="img" src="{{ show.show.image?.medium
+                                    }}" />
                             </a>
                         </div>
                         <div class="card-body">
-                            <h6 class="card-category text-gray">Language: {{ show.show.premiered }}</h6>
+                            <h6 class="card-category text-gray">
+                                Language: {{ show.show.premiered }}
+                            </h6>
                             <h4 class="card-title">{{ show.show.name }}</h4>
                         </div>
                         <div class="card-footer">

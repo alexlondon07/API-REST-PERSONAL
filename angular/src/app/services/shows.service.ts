@@ -27,5 +27,20 @@ export class ShowsService {
    * @param id Identificador del show tv
    */
   getShowById(id: number): Observable<any> {
-    return this._http.get(this.url + "/shows/"+id);
+    return this._http.get(this.url + "/shows/" + id);
+  }
+
+  /**
+   * Método para obtener el reparto de un programa de Tv
+   */
+  getShowCastById(id: number): Observable<any> {
+    return this._http.get(this.url + "/shows/" + id + "/cast");
+  }
+
+  /**
+   * Método para obtener las temporadas de un programa de Tv
+   */
+  getShowSeasonsById(id: number): Observable<any> {
+    return this._http.get(this.url + "/shows/" + id + "/seasons");
+  }
 }

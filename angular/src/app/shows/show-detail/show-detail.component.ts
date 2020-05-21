@@ -9,9 +9,8 @@ import { ShowsService } from '../../services/shows.service';
 export class ShowDetailComponent implements OnInit, OnDestroy {
   id: number;
   public show: any = {};
-  public rating: number = 10;
-  public starCount: number = 5;
-  public ratingArr = [];
+  public casts: any = [];
+  public seasons: any = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -21,29 +20,60 @@ export class ShowDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.id = +params["id"];
-      this._showService.getShowById(this.id).subscribe(
-        (data) => {
-          if (data) {
-            this.show = data;
-            for (let index = 0; index < this.show.rating.average; index++) {
-              this.ratingArr.push(index);
-            }
-          }
-        },
-        (error) => {
-          console.log(<any>error);
-        }
-      );
+      this.getDataDetail();
     });
   }
 
   ngOnDestroy() {}
 
-  showIcon(index: number) {
-    if (this.rating >= index + 1) {
-      return "star";
-    } else {
-      return "star_border";
-    }
+  /**
+   * Metodo para obtener el detalle del programa de tv
+   */
+  getDataDetail() {
+    this._showService.getShowById(this.id).subscribe(
+      (data) => {
+        if (data) {
+          this.show = data;
+          this.getDataCast();
+        }
+      },
+      (error) => {
+        console.log(<any>error);
+      }
+    );
   }
+
+  /**
+   * Metodo para obtener el el reparto del programa de tv
+   */
+  getDataCast() {
+    this._showService.getShowCastById(this.id).subscribe(
+      (data) => {
+        if (data) {
+          this.casts = data;
+          this.getDataSeason();
+        }
+      },
+      (error) => {
+        console.log(<any>error);
+      }
+    );
+  }
+
+  /**
+   * Metodo para obtener las temporadas del programa de tv
+   */
+  getDataSeason() {
+    this._showService.getShowSeasonsById(this.id).subscribe(
+      (data) => {
+        if (data) {
+          this.seasons = data;
+        }
+      },
+      (error) => {
+        console.log(<any>error);
+      }
+    );
+  }
+
 }
