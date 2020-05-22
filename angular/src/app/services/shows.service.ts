@@ -43,4 +43,11 @@ export class ShowsService {
   getShowSeasonsById(id: number): Observable<any> {
     return this._http.get(this.url + "/shows/" + id + "/seasons");
   }
+
+  /**
+   * Método para obtener las temporadas de un programa de Tv por medio de palabra claves
+   */
+  getShowByKeywords(text: string): Observable<any> {
+    http: return this._http.get(this.url + "/singlesearch/shows/?q=" + text);
+  }
 }

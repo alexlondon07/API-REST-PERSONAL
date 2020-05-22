@@ -10,8 +10,10 @@ export class ShowsComponent implements OnInit {
   public title: string;
   public description: string;
   public shows: any = [];
+  public showsInitial: any = [];
   public languages: any = [];
   public genres: any = [];
+  public search: string;
 
   constructor(private _showService: ShowsService) {
     this.title = "Shows TV";
@@ -30,6 +32,7 @@ export class ShowsComponent implements OnInit {
       (data) => {
         if (data) {
           this.shows = data;
+          this.showsInitial = data;
 
           // Languages
           this.shows.forEach((element) => {
@@ -43,9 +46,9 @@ export class ShowsComponent implements OnInit {
           // Genres
           this.shows.forEach((element) => {
             if (element.show.genres && element.show.genres.length > 0) {
-                element.show.genres.forEach((row) => {
-                    this.genres.push(row);
-                });
+              element.show.genres.forEach((row) => {
+                this.genres.push(row);
+              });
             }
           });
           var genresUnique = this.genres.filter(function (elem, index, self) {
@@ -59,4 +62,67 @@ export class ShowsComponent implements OnInit {
       }
     );
   }
+
+  /**
+   * Método para filtrar las peliculas según tipo(idioma, genero, canal)
+   */
+  filter(type: string, option: string) {
+    if (type != "" && option != "") {
+
+      console.log(type);
+
+      const filter: any = [];
+      switch (type) {
+        case "language":
+          if (option == "allLanguages") {
+            this.shows = this.showsInitial;
+          } else {
+            this.showsInitial.filter((element, i, arr) => {
+              if (element.show.language.includes(option)) {
+                filter.push(element);
+              }
+            });
+            this.shows = filter;
+          }
+          break;
+
+        case "keywords":
+            this.getDataByKeywords(this.search);
+          break;
+
+        case "genres":
+          if (option == "allGenres") {
+            this.shows = this.showsInitial;
+          } else {
+            this.showsInitial.filter((element, i, arr) => {
+              if (element.show.genres.includes(option)) {
+                filter.push(element);
+              }
+            });
+            this.shows = filter;
+          }
+          break;
+
+        default:
+          this.shows = this.showsInitial;
+          break;
+      }
+    }
+  }
+
+  /**
+   * Método para buscar peliculas por palabras claves
+   */
+  getDataByKeywords(text: string) {
+    this._showService.getShowByKeywords(text).subscribe(
+      (data) => {
+        if (data) {
+          this.shows = data;
+        }
+      },
+      (error) => {
+        console.log(<any>error);
+      }
+    );
+    }
 }

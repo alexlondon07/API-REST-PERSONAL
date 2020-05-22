@@ -4,34 +4,32 @@
             <div class="input-group no-border">
                 <div class="row">
 
-                    <div class="col-md-4">
-                        <select class="custom-select custom-select-sm">
-                            <option selected>Language</option>
+                    <div class="col-md-3">
+                        <select (change)="filter('language', $event.target.value)" class="custom-select custom-select-sm">
+                            <option value="allLanguages" selected>Language</option>
                             <option *ngFor="let option of languages" [value]="option">{{ option }}</option>
                         </select>
                     </div>
 
-                    <div class="col-md-4">
-                        <select class="custom-select custom-select-sm">
-                            <option selected>Genres</option>
+                    <div class="col-md-3">
+                        <select (change)="filter('genres', $event.target.value)" class="custom-select custom-select-sm">
+                            <option value="allGenres" selected>Genres all</option>
                             <option *ngFor="let option of genres" [value]="option">{{ option }}</option>
                         </select>
                     </div>
 
-                    <div class="col-md-4">
-                        <select class="custom-select custom-select-sm">
-                            <option selected>Channels</option>
-                            <option *ngFor="let option of languages" [value]="option">{{ option }}</option>
-                        </select>
+                    <div class="col-md-6">
+                        <div class="input-group no-border">
+                            <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="search" class="form-control" placeholder="Search...">
+                            <button (click)="filter('keywords', 'keywords')" mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon">
+                        <i class="material-icons">search</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                        </div>
                     </div>
 
                 </div>
 
-                <button mat-raised-button type="submit" class="btn btn-white
-                    btn-round btn-just-icon">
-                    <i class="material-icons">search</i>
-                    <div class="ripple-container"></div>
-                </button>
             </div>
         </form>
         <div class="row">
