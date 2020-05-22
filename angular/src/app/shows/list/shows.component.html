@@ -18,13 +18,22 @@
                         </select>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="input-group no-border">
                             <input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="search" class="form-control" placeholder="Search...">
                             <button (click)="filter('keywords', 'keywords')" mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon">
-                        <i class="material-icons">search</i>
-                        <div class="ripple-container"></div>
-                    </button>
+                                <i class="material-icons">search</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group no-border">
+
+                            <button (click)="filter('genres', 'allGenres')" mat-raised-button type="button" class="btn btn-white btn-round btn-just-icon">
+                                <i class="material-icons">refresh</i>
+                                <div class="ripple-container"></div>
+                            </button>
                         </div>
                     </div>
 
@@ -34,24 +43,24 @@
         </form>
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6" *ngFor="let show of shows">
-                <a href="#" [routerLink]="['/shows', show.show.id]">
+                <a href="#" [routerLink]="['/shows', show.id]">
                     <div class="card card-profile">
                         <div class="">
                             <a href="#">
-                                <img class="img" src="{{ show.show.image?.medium
+                                <img class="img" src="{{ show.image?.medium
                                     }}" />
                             </a>
                         </div>
                         <div class="card-body">
                             <h6 class="card-category text-gray">
-                                Language: {{ show.show.premiered }}
+                                Language: {{ show.premiered }}
                             </h6>
-                            <h4 class="card-title">{{ show.show.name }}</h4>
+                            <h4 class="card-title">{{ show.name }}</h4>
                         </div>
                         <div class="card-footer">
                             <span>Premiered</span>
                             <div class="stats">
-                                <i class="material-icons">date_range</i>{{ show.show.premiered }}
+                                <i class="material-icons">date_range</i>{{ show.premiered }}
                             </div>
                         </div>
                     </div>

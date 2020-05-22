@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShowsService } from '../../services/shows.service';
+import { element } from 'protractor';
 
 @Component({
   selector: "app-shows",
@@ -31,12 +32,15 @@ export class ShowsComponent implements OnInit {
     this._showService.getShows().subscribe(
       (data) => {
         if (data) {
-          this.shows = data;
           this.showsInitial = data;
+          this.showsInitial.forEach((element) => {
+            this.shows.push(element['show']);
+          });
+          this.showsInitial = this.shows;
 
           // Languages
           this.shows.forEach((element) => {
-            this.languages.push(element.show.language);
+            this.languages.push(element.language);
           });
           var unique = this.languages.filter(function (elem, index, self) {
             return index === self.indexOf(elem);
@@ -45,8 +49,8 @@ export class ShowsComponent implements OnInit {
 
           // Genres
           this.shows.forEach((element) => {
-            if (element.show.genres && element.show.genres.length > 0) {
-              element.show.genres.forEach((row) => {
+            if (element.genres && element.genres.length > 0) {
+              element.genres.forEach((row) => {
                 this.genres.push(row);
               });
             }
@@ -78,7 +82,7 @@ export class ShowsComponent implements OnInit {
             this.shows = this.showsInitial;
           } else {
             this.showsInitial.filter((element, i, arr) => {
-              if (element.show.language.includes(option)) {
+              if (element.language.includes(option)) {
                 filter.push(element);
               }
             });
@@ -95,7 +99,7 @@ export class ShowsComponent implements OnInit {
             this.shows = this.showsInitial;
           } else {
             this.showsInitial.filter((element, i, arr) => {
-              if (element.show.genres.includes(option)) {
+              if (element.genres.includes(option)) {
                 filter.push(element);
               }
             });
@@ -117,7 +121,8 @@ export class ShowsComponent implements OnInit {
     this._showService.getShowByKeywords(text).subscribe(
       (data) => {
         if (data) {
-          this.shows = data;
+          this.shows = [];
+          this.shows.push(data);
         }
       },
       (error) => {
