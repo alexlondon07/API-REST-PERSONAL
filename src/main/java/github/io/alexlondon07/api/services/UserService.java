@@ -2,23 +2,23 @@ package github.io.alexlondon07.api.services;
 
 import java.util.List;
 
-import github.io.alexlondon07.api.models.Client;
-import github.io.alexlondon07.api.models.Users;
+import github.io.alexlondon07.api.models.User;
 
 public interface UserService {
-	
-	void saveUser(Users user);
 
-	void updateUser(Users user);
+	void saveUser(User user);
 
-	void deleteUser(String userName);
+	void updateUser(User user);
 
-	Users findByUserNameAndPwd(String userName, String pwd);
-	
-	Users findByUserName(String username);
+	void deleteUser(long id);
 
-	
-	List<Users> findAllUser();
+	User findByUserNameAndPwd(String userName, String pwd);
 
-	boolean isClientExist(Users user);
+	User findByUserName(String username);
+
+	User findById(long id);
+
+	List<User> findAllUser();
+
+	boolean isUserExist(User user);
 }

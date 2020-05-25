@@ -1,13 +1,13 @@
 # ************************************************************
 # Sequel Pro SQL dump
-# Versión 4541
+# Versiï¿½n 4541
 #
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
 # Host: 127.0.0.1 (MySQL 5.7.21)
 # Base de datos: TVSHOWS
-# Tiempo de Generación: 2020-05-15 22:33:13 +0000
+# Tiempo de Generaciï¿½n: 2020-05-15 22:33:13 +0000
 # ************************************************************
 
 
@@ -25,13 +25,15 @@
 
 DROP TABLE IF EXISTS `USERS`;
 
-CREATE TABLE `USERS` (
+CREATE TABLE `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(11) DEFAULT NULL,
-  `user` varchar(11) DEFAULT NULL,
-  `pwd` varchar(11) DEFAULT NULL,
+  `name` varchar(60) DEFAULT NULL,
+  `lastname` varchar(60) DEFAULT NULL,
+  `type` varchar(10) DEFAULT NULL,
+  `user` varchar(30) DEFAULT NULL,
+  `pwd` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 

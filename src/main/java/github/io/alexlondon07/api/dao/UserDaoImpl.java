@@ -6,48 +6,45 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
-import github.io.alexlondon07.api.models.Client;
-import github.io.alexlondon07.api.models.Users;
+import github.io.alexlondon07.api.models.User;
 
 @Repository
 @Transactional
 public class UserDaoImpl extends AbstractSession implements UserDao {
 
 	@Override
-	public void saveUser(Users user) {
+	public void saveUser(User user) {
 		getSession().persist(user);
 	}
 
 	@Override
-	public void updateUser(Users user) {
+	public void updateUser(User user) {
 		getSession().update(user);
-
 	}
 
 	@Override
-	public void deleteUser(String userName) {
-		if (userName != null && !userName.isEmpty()) {
-			Users user = findByUserName(userName);
+	public void deleteUser(Long id) {
+		if (id > 0) {
+			User user = findById(id);
 			getSession().delete(user);
 		}
-
 	}
 
 	@Override
-	public Users findByUserNameAndPwd(String userName, String pwd) {
-		return (Users) getSession().createQuery("from USERS where user = :user and pwd = :pwd ")
+	public User findByUserNameAndPwd(String userName, String pwd) {
+		return (User) getSession().createQuery("from User where user = :user and pwd = :pwd ")
 				.setParameter("user", userName).setParameter("pwd", pwd).uniqueResult();
 
 	}
 
 	@Override
-	public List<Users> findAllUser() {
-		return getSession().createQuery("from USERS").list();
+	public List<User> findAllUser() {
+		return getSession().createQuery("from User").list();
 	}
 
 	@Override
-	public boolean isClientExist(Users user) {
-		Users userResponse = findByUserName(user.getUser());
+	public boolean isUserExist(User user) {
+		User userResponse = findByUserName(user.getName());
 
 		boolean vBalid = false;
 		if (userResponse != null) {
@@ -57,8 +54,13 @@ public class UserDaoImpl extends AbstractSession implements UserDao {
 	}
 
 	@Override
-	public Users findByUserName(String username) {
-		return (Users) getSession().createQuery("from USERS where user = :user").setParameter("user", username)
+	public User findByUserName(String username) {
+		return (User) getSession().createQuery("from User where user = :user").setParameter("user", username)
 				.uniqueResult();
+	}
+
+	@Override
+	public User findById(long id) {
+		return getSession().get(User.class, id);
 	}
 }

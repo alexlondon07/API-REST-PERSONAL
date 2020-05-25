@@ -20,13 +20,17 @@ import {
   MatTooltipModule,
   MatSelectModule,
   MatIconModule,
+  MatSnackBarModule,
 } from "@angular/material";
 
 import { ClientService } from 'app/services/client-service.service';
 import { ClientAddComponent } from 'app/client-add/client-add.component';
 import { ClientsComponent } from 'app/clients/clients.component';
-import { ShowsComponent } from '../../shows/list/shows.component';
-import { ShowDetailComponent } from '../../shows/show-detail/show-detail.component';
+import { ShowsComponent } from 'app/shows/list/shows.component';
+import { ShowDetailComponent } from 'app/shows/show-detail/show-detail.component';
+import { UsersComponent } from 'app/users/user-list/users.component';
+import { UserService } from '../../services/user.service';
+import { CreateUserComponent } from '../../users/create-user/create-user/create-user.component';
 
 @NgModule({
   imports: [
@@ -40,6 +44,7 @@ import { ShowDetailComponent } from '../../shows/show-detail/show-detail.compone
     MatSelectModule,
     MatTooltipModule,
     MatIconModule,
+    MatSnackBarModule
   ],
   declarations: [
     DashboardComponent,
@@ -54,7 +59,9 @@ import { ShowDetailComponent } from '../../shows/show-detail/show-detail.compone
     ClientAddComponent,
     ShowsComponent,
     ShowDetailComponent,
+    UsersComponent,
+    CreateUserComponent
   ],
-  providers: [ClientService],
+  providers: [ClientService, UserService],
 })
 export class AdminLayoutModule {}
