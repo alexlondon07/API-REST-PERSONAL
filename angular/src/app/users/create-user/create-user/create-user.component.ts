@@ -31,8 +31,10 @@ export class CreateUserComponent implements OnInit {
   ngOnInit() {
     this._route.params.forEach((params: Params) => {
       let id = params["id"];
-      this.title = "Edit user " + id;
-      this.edit(id);
+      if( id > 0){
+        this.title = "Edit user " + id;
+        this.edit(id);
+      }
     });
   }
 

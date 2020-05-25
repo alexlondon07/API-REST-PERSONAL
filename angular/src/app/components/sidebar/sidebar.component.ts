@@ -17,12 +17,12 @@ export const ROUTES: RouteInfo[] = [
            icon: "person",
            class: "",
          },
-         {
-           path: "/client-add",
-           title: "Clients Add",
-           icon: "person",
-           class: "",
-         },
+        //  {
+        //    path: "/client-add",
+        //    title: "Clients Add",
+        //    icon: "person",
+        //    class: "",
+        //  },
          //  {
          //    path: "/dashboard",
          //    title: "Dashboard",
