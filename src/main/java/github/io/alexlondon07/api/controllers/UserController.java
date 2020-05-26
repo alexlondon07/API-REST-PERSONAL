@@ -1,5 +1,9 @@
 package github.io.alexlondon07.api.controllers;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,9 +91,27 @@ public class UserController {
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "OK", response = User.class) })
 	@PostMapping(value = "/users", headers = Constants.JSON)
 	public CustomResponse<?> createUser(@Validated @RequestBody User user, UriComponentsBuilder uriBuilder,
-			BindingResult bindingResult) {
+			BindingResult bindingResult) throws IOException {
 
-		logger.info("Creating User : {}", user.getName());
+		logger.info("Creating User : {}", " User name: " + user.getUser() + " Name: " + user.getName() + " Last Name: "
+				+ user.getLastName() + " Role: " + user.getRole());
+
+		try {
+			String content = "Creating User:  Name: " + user.getName() + " Last Name: " + user.getLastName() + " Role: "
+					+ user.getRole() + " User " + user.getUser() + "\n";
+			File file = new File("src/main/resources/static/crud.txt");
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(content);
+			bw.close();
+
+		} catch (IOException e) {
+			logger.error("Error IOException" + e.getMessage());
+		}
 
 		if (bindingResult.hasErrors()) {
 
