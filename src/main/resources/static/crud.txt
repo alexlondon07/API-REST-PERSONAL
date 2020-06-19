@@ -1,2 +1,6 @@
 Delete User  Name: ESTEFANY Last Name: MARTINEZ SUAREZ Role: ADMIN User estefany
 Delete User  Name: ARACELLY Last Name: ESPEJO Role: ADMIN User aracelly
+Delete User  Name: EMILIANA Last Name: LONDOÑO MARTINEZ Role: USERS User emiliana
+Creating User:  Name: TEST Last Name: test Role: USERS User test
+Create User  Name: TEST Last Name: test Role: USERS User test
+Update User  Name: TEST update Last Name: test Role: USERS User test
