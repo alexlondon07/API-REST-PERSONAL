@@ -1,0 +1,36 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-plain">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title mt-0">{{ title }}</h4>
+            <p class="card-category">{{ description }}</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="">
+                  <th>#</th>
+                  <th>Identification</th>
+                  <th>Firstname</th>
+                  <th>Lastname</th>
+                  <th>Birthdate</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of clients; let i = index">
+                    <th>{{ i + 1 }}</th>
+                    <td>{{ item.identification }}</td>
+                    <td>{{ item.firstname }}</td>
+                    <td>{{ item.lastname }}</td>
+                    <td>{{ item.birthdate }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

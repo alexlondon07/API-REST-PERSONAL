@@ -1,0 +1,75 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title"> {{ title }}</h4>
+            <p class="card-category">{{ description }}</p>
+          </div>
+          <div class="card-body">
+              <form (ngSubmit)="saveClient(f)" #f="ngForm">
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input
+                    matInput
+                    type="text"
+                    placeholder="Fist Name"
+                    name="Fist Name"
+                    required
+                    [(ngModel)]="client.firstname"
+                    /> 
+
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                      <input
+                      matInput
+                      type="text"
+                      placeholder="Last Name"
+                      name="Last Name"
+                      [(ngModel)]="client.lastname"
+                      required
+                      /> 
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input
+                        matInput
+                        type="number"
+                        mix="6"
+                        max="10"
+                        placeholder="Identification"
+                        name="Identification"
+                        [(ngModel)]="client.identification"
+                        required
+                        /> 
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input
+                        matInput
+                        type="date"
+                        placeholder="Birthdate"
+                        name="Birthdate"
+                        [(ngModel)]="client.birthdate"
+                        required
+                        />
+                    </mat-form-field>
+                  </div>
+              </div>
+              <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save client</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
