@@ -1,0 +1,166 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Show Detatil # {{ show.id }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="card card-profile">
+                                <div class="">
+                                    <a href="#">
+                                        <img src="{{ show.image?.medium }}" />
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ show.name }}</h4>
+                                    <p class="card-description">
+                                        {{ show.summary }}
+                                    </p>
+                                    <a href="#" [routerLink]="['/shows']" class="btn btn-danger btn-round">Come back</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-danger">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">Detail:</span>
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link active" href="#profile" data-toggle="tab">
+                                            <i class="material-icons">local_movies</i> Show Info
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" href="#messages" data-toggle="tab">
+                                            <i class="material-icons">assignment_ind</i> Cast
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" href="#settings" data-toggle="tab">
+                                            <i class="material-icons">video_library</i> Seasons
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="profile">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Network</td>
+                                            <td>{{ show.network?.name }} {{ show.network?.country.name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Type</td>
+                                            <td>{{ show.type }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Language</td>
+                                            <td>{{ show.language }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Status</td>
+                                            <td>{{ show.status }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Runtime</td>
+                                            <td>{{ show.runtime }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Schedule Days</td>
+                                            <td>{{ show.schedule?.days }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Schedule Time</td>
+                                            <td>{{ show.schedule?.time }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Official Site</td>
+                                            <td><a href="{{ show.officialSite}}" target="_blank">Link</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Genres</td>
+                                            <td>
+                                                <div *ngFor="let genre of show.genres">
+                                                    {{ genre }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="messages">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>Phone</th>
+                                        <th>Name</th>
+                                        <th>Country</th>
+                                        <th>Birthday</th>
+                                        <th>Gender</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let cast of casts">
+                                            <td>
+                                                <div class="card-avatar">
+                                                    <a href="#">
+                                                        <img class="img" src="{{ cast.person.image?.medium }}" />
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td> {{ cast.person?.name }} </td>
+                                            <td> {{ cast.person?.country?.name }} </td>
+                                            <td> {{ cast.person?.birthday }} </td>
+                                            <td> {{ cast.person?.gender }} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="settings">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>Photo</th>
+                                        <th>Number</th>
+                                        <th>Episode Order</th>
+                                        <th>Premiere Date</th>
+                                        <th>End Date</th>
+                                        <th>Link</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of seasons">
+                                            <td>
+                                                <div class="card-avatar">
+                                                    <a href="#">
+                                                        <img class="img" src="{{ item.image?.medium }}" />
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td> {{ item.number }}</td>
+                                            <td> {{ item.episodeOrder }}</td>
+                                            <td> {{ item.premiereDate }}</td>
+                                            <td> {{ item.endDate }}</td>
+                                            <td><a href="{{ item.url}}" target="_blank">Link</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

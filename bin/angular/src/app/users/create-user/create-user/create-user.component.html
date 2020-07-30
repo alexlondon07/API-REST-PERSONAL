@@ -1,0 +1,55 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title"> Users</h4>
+                        <p class="card-category">{{ title }} </p>
+                    </div>
+                    <div class="card-body">
+                        <form (ngSubmit)="saveUser(f)" #f="ngForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" max="60" placeholder="Fist Name" name="Fist Name" required [(ngModel)]="user.name" />
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" max="60" placeholder="Last Name" name="Last Name" [(ngModel)]="user.lastName" required />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" mix="4" max="30" placeholder="User name" name="User name" [(ngModel)]="user.user" required />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="password" mix="4" max="20" placeholder="Password" name="Password" [(ngModel)]="user.pwd" required />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Role</mat-label>
+                                        <mat-select required [(ngModel)]="user.role" name="food">
+                                            <mat-option *ngFor="let role of roles" [value]="role.value">
+                                                {{role.viewValue}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save user</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

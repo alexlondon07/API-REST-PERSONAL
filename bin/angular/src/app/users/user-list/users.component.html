@@ -1,0 +1,46 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-plain">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title mt-0">Users</h4>
+                        <p class="card-category">Clients list from BD</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="">
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                    <th>User</th>
+                                    <th>Firstname</th>
+                                    <th>Lastname</th>
+                                    <th>Role</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of users; let i = index">
+                                        <td>
+                                            <button (click)="goToEditUser(item.id)" mat-mini-fab color="primary" title="Delete">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button (click)="deleteUser(item.id);" mat-mini-fab color="primary" title="Delete">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </td>
+                                        <td>{{ item.user }}</td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.lastName }}</td>
+                                        <td>{{ item.role }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
