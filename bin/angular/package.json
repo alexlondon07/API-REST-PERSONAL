@@ -30,7 +30,7 @@
     "@angular/platform-browser-dynamic": "7.0.2",
     "@angular/platform-server": "7.0.2",
     "@angular/router": "7.0.2",
-    "ajv": "6.4.0",
+    "ajv": "6.12.3",
     "arrive": "2.4.1",
     "bootstrap": "4.1.0",
     "bootstrap-material-design": "4.1.1",
